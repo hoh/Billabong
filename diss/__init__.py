@@ -4,17 +4,11 @@ import hashlib
 import magic
 from datetime import datetime
 
-from diss.utils import dumps, loads
+from .settings import STORAGE_PATH, TMPSTORAGE_PATH, METADATA_PATH
+from .encryption import copy_and_encrypt
+from .utils import dumps, loads
 
 hashing = hashlib.sha256
-STORAGE_PATH = './data'
-METADATA_PATH = './meta'
-
-
-def copy_file(meta):
-    "Copy a file in the data storage"
-    destination = os.path.join(STORAGE_PATH, meta['id'])
-    open(destination, 'wb').write(open(meta['info']['path'], 'rb').read())
 
 
 def save_metadata(meta):
@@ -34,7 +28,7 @@ def add_file(filepath):
     file_hash.update(open(filepath, 'rb').read())
 
     # TODO: replace by a hash of the encrypted file
-    id_ = hashing((key + file_hash.hexdigest()).encode()).hexdigest()
+    id_ = copy_and_encrypt(filepath, key)
 
     meta = {
         'key': key,
@@ -51,7 +45,6 @@ def add_file(filepath):
             }
         }
 
-    copy_file(meta)
     save_metadata(meta)
 
     return meta

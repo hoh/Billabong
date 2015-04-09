@@ -1,3 +1,5 @@
+pycrypto
+
 pytest
 pytest-cov
 pytest-flakes

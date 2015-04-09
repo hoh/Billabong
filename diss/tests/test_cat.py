@@ -1,7 +1,6 @@
-
+import pytest
 from diss import get_content
-
-ID = "d1477532aa7e401f3050280cdf86d6ea98a9c01f23d4c905aa0f641635a20bb7"
+from .testdata import ID
 
 
 def test_get_content():
