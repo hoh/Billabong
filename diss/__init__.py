@@ -48,7 +48,6 @@ def add_file(filepath):
             }
         }
 
-
     copy_file(meta)
     save_metadata(meta)
 
