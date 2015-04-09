@@ -1,0 +1,4 @@
+#!/bin/bash
+
+py.test --cov diss --pep8 --flakes diss
+coverage html
