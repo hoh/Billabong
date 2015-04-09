@@ -30,25 +30,24 @@ def add_file(filepath):
 
     key = 'UNIQUE_SECRET_KEY'
 
-    meta = {
-        'key': key,
-    }
-
     file_hash = hashing()
     file_hash.update(open(filepath, 'rb').read())
-    meta['hash'] = 'sha256-' + file_hash.hexdigest()
 
-    meta['size'] = os.path.getsize(filepath)
-    meta['info'] = {
-        'type': magic.from_file(filepath).decode(),
-        'mimetype': magic.from_file(filepath, mime=True).decode(),
-        'filename': filepath,
-        'path': filepath,
-    }
+    meta = {
+        'key': key,
+        'hash': 'sha256-' + file_hash.hexdigest(),
+        'size': os.path.getsize(filepath),
+        'timestamp': datetime.now(),
+        'id': hashing((key + file_hash.hexdigest()).encode()).hexdigest(),
 
-    meta['timestamp'] = datetime.now()
+        'info': {
+            'type': magic.from_file(filepath).decode(),
+            'mimetype': magic.from_file(filepath, mime=True).decode(),
+            'filename': filepath,
+            'path': filepath,
+            }
+        }
 
-    meta['id'] = hashing((key + meta['hash']).encode()).hexdigest()
 
     copy_file(meta)
     save_metadata(meta)
