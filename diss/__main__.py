@@ -1,13 +1,12 @@
 import sys
-from diss import add_file, get_meta
+from diss import add_file, get_meta, list_blobs, get_content
 from diss.utils import dumps
 
 
 if len(sys.argv) > 1:
 
     if sys.argv[1] in ('ls', 'list'):
-        result = ('hello.txt', 'flower.png')
-        for i in result:
+        for i in list_blobs():
             print(i)
 
     elif sys.argv[1] == 'add':
@@ -23,6 +22,11 @@ if len(sys.argv) > 1:
         id_ = sys.argv[2]
         meta = get_meta(id_)
         print(dumps(meta))
+
+    elif sys.argv[1] == 'echo':
+        id_ = sys.argv[2]
+        data = get_content(id_)
+        print(data)
 
     else:
         print('Unknown command')

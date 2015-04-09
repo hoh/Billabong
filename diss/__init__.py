@@ -1,5 +1,5 @@
 
-import os.path
+import os
 import hashlib
 from datetime import datetime
 
@@ -55,3 +55,15 @@ def get_meta(id_):
     "Load metadata for the given id."
     filepath = os.path.join(METADATA_PATH, id_ + '.json')
     return loads(open(filepath, 'r').read())
+
+
+def list_blobs():
+    for id_ in os.listdir(METADATA_PATH):
+        id_ = id_.replace('.json', '')
+        meta = get_meta(id_)
+        yield meta['path']['relative']
+
+
+def get_content(id_):
+    destination = os.path.join(STORAGE_PATH, id_)
+    return open(destination).read()
