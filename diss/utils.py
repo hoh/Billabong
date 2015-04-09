@@ -12,3 +12,6 @@ def json_handler(obj):
 
 def dumps(obj, indent=2):
     return json.dumps(obj, default=json_handler, indent=indent)
+
+
+loads = json.loads

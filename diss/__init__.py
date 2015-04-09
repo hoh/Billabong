@@ -3,7 +3,7 @@ import os.path
 import hashlib
 from datetime import datetime
 
-from diss.utils import dumps
+from diss.utils import dumps, loads
 
 hashing = hashlib.sha256
 STORAGE_PATH = './data'
@@ -17,7 +17,7 @@ def copy_file(meta):
 
 
 def save_metadata(meta):
-    destination = os.path.join(METADATA_PATH, meta['id'])
+    destination = os.path.join(METADATA_PATH, meta['id'] + '.json')
     open(destination, 'w').write(dumps(meta))
 
 
@@ -49,3 +49,9 @@ def add_file(filepath):
     save_metadata(meta)
 
     return meta
+
+
+def get_meta(id_):
+    "Load metadata for the given id."
+    filepath = os.path.join(METADATA_PATH, id_ + '.json')
+    return loads(open(filepath, 'r').read())

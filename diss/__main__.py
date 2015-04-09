@@ -1,5 +1,5 @@
 import sys
-from diss import add_file
+from diss import add_file, get_meta
 from diss.utils import dumps
 
 
@@ -14,6 +14,19 @@ if len(sys.argv) > 1:
         target = sys.argv[2]
         meta = add_file(target)
         print(dumps(meta))
+
+    elif sys.argv[1] == 'get':
+        target = sys.argv[2]
+        raise NotImplemented
+
+    elif sys.argv[1] == 'info':
+        id_ = sys.argv[2]
+        meta = get_meta(id_)
+        print(dumps(meta))
+
+    else:
+        print('Unknown command')
+
 
 else:
     print('dis ls')
