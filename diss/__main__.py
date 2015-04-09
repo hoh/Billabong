@@ -2,6 +2,14 @@ import sys
 from diss import add_file, get_meta, list_blobs, get_content
 from diss.utils import dumps
 
+HELP = '''DIstributed Storage System
+
+dis ls
+dis add somefile.png
+dis get $HASH
+dis info $HASH
+dis echo $HASH
+'''
 
 if len(sys.argv) > 1:
 
@@ -33,5 +41,4 @@ if len(sys.argv) > 1:
 
 
 else:
-    print('dis ls')
-    print('dis add hello.txt')
+    print(HELP)
