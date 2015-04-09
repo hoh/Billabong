@@ -1,0 +1,9 @@
+/.cache
+/.coverage
+/htmlcov
+
+*.pyc
+__pycache__
+
+/data
+/meta
