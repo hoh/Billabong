@@ -22,7 +22,7 @@ def add_file(filepath):
     if not os.path.isfile(filepath):
         raise FileNotFoundError
 
-    key = 'UNIQUE_SECRET_KEY'
+    key = b'0'*32
 
     file_hash = hashing()
     file_hash.update(open(filepath, 'rb').read())
@@ -65,4 +65,4 @@ def list_blobs():
 
 def get_content(id_):
     destination = os.path.join(STORAGE_PATH, id_)
-    return open(destination).read()
+    return open(destination, 'rb').read()
