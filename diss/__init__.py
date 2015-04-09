@@ -33,12 +33,15 @@ def add_file(filepath):
     file_hash = hashing()
     file_hash.update(open(filepath, 'rb').read())
 
+    # TODO: replace by a hash of the encrypted file
+    id_ = hashing((key + file_hash.hexdigest()).encode()).hexdigest()
+
     meta = {
         'key': key,
         'hash': 'sha256-' + file_hash.hexdigest(),
         'size': os.path.getsize(filepath),
         'timestamp': datetime.now(),
-        'id': hashing((key + file_hash.hexdigest()).encode()).hexdigest(),
+        'id': id_,
 
         'info': {
             'type': magic.from_file(filepath).decode(),
