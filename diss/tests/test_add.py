@@ -14,9 +14,8 @@ def test_add_file():
     assert meta['hash'].startswith('sha256-')
     assert meta['hash'] == 'sha256-' + expected_hash
 
-    assert meta['path']['relative']
-    assert meta['path']['absolute']
-    assert meta['path']['filename']
+    assert meta['info']['path']
+    assert meta['info']['filename']
 
 
 def test_add_file_json():

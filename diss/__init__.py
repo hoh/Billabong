@@ -1,6 +1,7 @@
 
 import os
 import hashlib
+import magic
 from datetime import datetime
 
 from diss.utils import dumps, loads
@@ -13,7 +14,7 @@ METADATA_PATH = './meta'
 def copy_file(meta):
     "Copy a file in the data storage"
     destination = os.path.join(STORAGE_PATH, meta['id'])
-    open(destination, 'wb').write(open(meta['path']['absolute'], 'rb').read())
+    open(destination, 'wb').write(open(meta['info']['path'], 'rb').read())
 
 
 def save_metadata(meta):
@@ -30,16 +31,20 @@ def add_file(filepath):
     key = 'UNIQUE_SECRET_KEY'
 
     meta = {
-        'path': {'filename': filepath,
-                 'absolute': filepath,
-                 'relative': filepath,
-                 },
         'key': key,
     }
 
     file_hash = hashing()
     file_hash.update(open(filepath, 'rb').read())
     meta['hash'] = 'sha256-' + file_hash.hexdigest()
+
+    meta['size'] = os.path.getsize(filepath)
+    meta['info'] = {
+        'type': magic.from_file(filepath).decode(),
+        'mimetype': magic.from_file(filepath, mime=True).decode(),
+        'filename': filepath,
+        'path': filepath,
+    }
 
     meta['timestamp'] = datetime.now()
 
@@ -61,7 +66,7 @@ def list_blobs():
     for id_ in os.listdir(METADATA_PATH):
         id_ = id_.replace('.json', '')
         meta = get_meta(id_)
-        yield meta['path']['relative']
+        yield meta['info']['path']
 
 
 def get_content(id_):
