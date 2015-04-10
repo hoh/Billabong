@@ -5,7 +5,7 @@ import magic
 from datetime import datetime
 
 from .settings import STORAGE_PATH, TMPSTORAGE_PATH, METADATA_PATH
-from .encryption import copy_and_encrypt
+from .encryption import copy_and_encrypt, decrypt_blob
 from .utils import dumps, loads
 
 hashing = hashlib.sha256
@@ -64,5 +64,5 @@ def list_blobs():
 
 
 def get_content(id_):
-    destination = os.path.join(STORAGE_PATH, id_)
-    return open(destination, 'rb').read()
+    key = get_meta(id_)['key']
+    return decrypt_blob(id_, key)

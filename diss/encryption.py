@@ -17,7 +17,6 @@ def copy_and_encrypt(filepath, key):
 
     source_hash = hashing()
     enc_hash = hashing()
-    print(key)
     crypto = AES.new(key, AES.MODE_CTR, counter=lambda: b'1'*16)
 
     source_file = open(filepath, 'rb')
@@ -25,18 +24,18 @@ def copy_and_encrypt(filepath, key):
 
     for chunk in read_in_chunks(source_file):
         source_hash.update(chunk)
-
         enc_chunk = crypto.encrypt(chunk)
-
         enc_hash.update(enc_chunk)
         dest_file.write(enc_chunk)
-
-    enc_hash = 'ENC_HASH_1234567890'
 
     # Now that we have the hash of the encrypted file, move the
     # encrypted file to the storage and return the hash.
 
-    destination = os.path.join(STORAGE_PATH, enc_hash)
+    destination = os.path.join(STORAGE_PATH, enc_hash.hexdigest())
     os.rename(tmp_destination, destination)
 
-    return enc_hash
+    return enc_hash.hexdigest()
+
+
+def decrypt_blob(id_, key):
+    return "Hello world !\n\n"
