@@ -1,3 +1,4 @@
+import os
 import sys
 from diss import add_file, get_meta, list_blobs, get_content
 from diss.utils import dumps
@@ -34,7 +35,12 @@ if len(sys.argv) > 1:
     elif sys.argv[1] == 'echo':
         id_ = sys.argv[2]
         data = get_content(id_)
-        print(data)
+
+        # Write bytes to stdout:
+        fp = os.fdopen(sys.stdout.fileno(), 'wb')
+        for chunk in data:
+            fp.write(chunk)
+            fp.flush()
 
     else:
         print('Unknown command')

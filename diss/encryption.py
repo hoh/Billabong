@@ -39,6 +39,7 @@ def copy_and_encrypt(filepath, key):
 
 
 def decrypt_blob(id_, key):
+    "Decrypt the content of a blob through a generator."
     enc_path = os.path.join(STORAGE_PATH, id_)
     enc_file = open(enc_path, 'rb')
 
