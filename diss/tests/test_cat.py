@@ -6,5 +6,5 @@ from .testdata import ID
 def test_get_content():
     id_ = ID
 
-    content = get_content(id_)
-    assert content == "Hello world !\n\n"
+    content = b"".join(get_content(id_))
+    assert content == b"Hello world !\n\n"

@@ -39,9 +39,11 @@ def copy_and_encrypt(filepath, key):
 
 
 def decrypt_blob(id_, key):
+    enc_path = os.path.join(STORAGE_PATH, id_)
+    enc_file = open(enc_path, 'rb')
 
-    meta = get_meta(id_)
+    crypto = AES.new(key, AES.MODE_CTR, counter=lambda: b'1'*16)
 
-    blob_path = os.path.join(STORAGE_PATH, id_)
-
-    return "Hello world !\n\n"
+    for enc_chunk in read_in_chunks(enc_file):
+        chunk = crypto.decrypt(enc_chunk)
+        yield chunk
