@@ -1,6 +1,6 @@
 
 # import json
-from diss import get_meta
+from diss.meta import get_meta
 # from diss.utils import json_handler
 from .testdata import ID
 

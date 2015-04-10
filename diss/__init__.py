@@ -5,8 +5,9 @@ import magic
 from datetime import datetime
 
 from .settings import METADATA_PATH
+from .meta import get_meta
 from .encryption import copy_and_encrypt, decrypt_blob
-from .utils import dumps, loads
+from .utils import dumps
 
 hashing = hashlib.sha256
 
@@ -48,12 +49,6 @@ def add_file(filepath):
     save_metadata(meta)
 
     return meta
-
-
-def get_meta(id_):
-    "Load metadata for the given id."
-    filepath = os.path.join(METADATA_PATH, id_ + '.json')
-    return loads(open(filepath, 'r').read())
 
 
 def list_blobs():

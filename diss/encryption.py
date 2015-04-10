@@ -3,6 +3,7 @@ import os
 import hashlib
 from Crypto.Cipher import AES
 
+from .meta import get_meta
 from .settings import STORAGE_PATH, TMPSTORAGE_PATH
 from .utils import read_in_chunks
 
@@ -38,4 +39,9 @@ def copy_and_encrypt(filepath, key):
 
 
 def decrypt_blob(id_, key):
+
+    meta = get_meta(id_)
+
+    blob_path = os.path.join(STORAGE_PATH, id_)
+
     return "Hello world !\n\n"
