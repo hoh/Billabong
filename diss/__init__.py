@@ -5,7 +5,7 @@ import magic
 from datetime import datetime
 
 from .settings import METADATA_PATH
-from .meta import get_meta
+from .meta import get_meta, list_blobs
 from .encryption import copy_and_encrypt, decrypt_blob
 from .utils import dumps
 
@@ -49,13 +49,6 @@ def add_file(filepath):
     save_metadata(meta)
 
     return meta
-
-
-def list_blobs():
-    for id_ in os.listdir(METADATA_PATH):
-        id_ = id_.replace('.json', '')
-        meta = get_meta(id_)
-        yield meta['info']['path']
 
 
 def get_content(id_):

@@ -1,6 +1,7 @@
 import os
 import sys
-from diss import add_file, get_meta, list_blobs, get_content
+from diss import add_file, get_content
+from diss.meta import list_blobs, get_meta, search_meta
 from diss.utils import dumps
 
 HELP = '''DIstributed Storage System
@@ -41,6 +42,11 @@ if len(sys.argv) > 1:
         for chunk in data:
             fp.write(chunk)
             fp.flush()
+
+    elif sys.argv[1] == 'search':
+        term = sys.argv[2]
+        for i in search_meta(term):
+            print(i)
 
     else:
         print('Unknown command')
