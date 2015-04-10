@@ -4,7 +4,7 @@ import hashlib
 import magic
 from datetime import datetime
 
-from .settings import STORAGE_PATH, TMPSTORAGE_PATH, METADATA_PATH
+from .settings import METADATA_PATH
 from .encryption import copy_and_encrypt, decrypt_blob
 from .utils import dumps, loads
 
