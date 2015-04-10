@@ -7,10 +7,11 @@ from diss.utils import dumps
 HELP = '''DIstributed Storage System
 
 dis ls
-dis add somefile.png
+dis add $SOMEFILE
 dis get $HASH
 dis info $HASH
 dis echo $HASH
+dis search $TERM
 '''
 
 if len(sys.argv) > 1:
