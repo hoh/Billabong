@@ -1,5 +1,5 @@
 
-from diss import list_blobs
+from diss.meta import list_blobs
 
 
 def test_list_blobs():

@@ -5,7 +5,7 @@ import magic
 from datetime import datetime
 
 from .settings import METADATA_PATH
-from .meta import get_meta, list_blobs
+from .meta import get_meta
 from .encryption import copy_and_encrypt, decrypt_blob
 from .utils import dumps
 

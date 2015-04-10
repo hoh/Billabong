@@ -3,7 +3,6 @@ import os
 import hashlib
 from Crypto.Cipher import AES
 
-from .meta import get_meta
 from .settings import STORAGE_PATH, TMPSTORAGE_PATH
 from .utils import read_in_chunks
 
