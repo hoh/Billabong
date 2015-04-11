@@ -41,7 +41,7 @@ def add_file(filepath):
         'info': {
             'type': magic.from_file(filepath).decode(),
             'mimetype': magic.from_file(filepath, mime=True).decode(),
-            'filename': filepath,
+            'filename': os.path.basename(filepath),
             'path': filepath,
             }
         }
