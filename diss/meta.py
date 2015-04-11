@@ -18,6 +18,13 @@ def list_blobs():
         yield meta['info']['path']
 
 
+def list_filenames():
+    "List all blobs by their filename."
+    for id_ in list_ids():
+        meta = get_meta(id_)
+        yield meta['info']['filename'].replace('/', '.')
+
+
 def get_meta(id_):
     "Load metadata for the given id."
     filepath = os.path.join(METADATA_PATH, id_ + '.json')
@@ -30,3 +37,11 @@ def search_meta(term):
         meta = get_meta(id_)
         if term in dumps(meta):
             yield id_
+
+
+def meta_by_filename(filename):
+    "Return the id of the first document matching filename"
+    for id_ in list_ids():
+        meta = get_meta(id_)
+        if filename == meta['info']['filename']:
+            return id_
