@@ -39,7 +39,7 @@ def search_meta(term):
             yield id_
 
 
-def meta_by_filename(filename):
+def id_from_filename(filename):
     "Return the id of the first document matching filename"
     for id_ in list_ids():
         meta = get_meta(id_)

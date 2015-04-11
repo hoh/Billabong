@@ -10,8 +10,25 @@ import mmap  # temporary replacement for file access
 from fuse import FUSE, FuseOSError, Operations
 
 from diss import get_content
-from diss.meta import list_ids, list_filenames, get_meta, meta_by_filename
+from diss.meta import list_ids, list_filenames, get_meta, id_from_filename
 from diss.settings import STORAGE_PATH, METADATA_PATH
+
+
+def id_from_path(path):
+    "Get the blob id from a FUSE path"
+    if path.startswith('/blobs/'):
+        id_ = path[len('/blobs/'):]
+    elif path.startswith('/files/'):
+        filename = path.split('/')[-1]
+        id_ = id_from_filename(filename)
+    else:
+        id_ = None
+
+    if id_:
+        return id_
+    else:
+        raise FuseOSError(errno.ENOENT)
+
 
 
 class DissFilesystem(Operations):
@@ -36,6 +53,9 @@ class DissFilesystem(Operations):
                 st_ctime=1428702934,
             )
         else:
+            id_ = id_from_path(path)
+            print('id_', path, id_)
+            meta = get_meta(id_)
             return dict(
                 st_mode=33188,
                 st_ino=7093655,
@@ -43,7 +63,7 @@ class DissFilesystem(Operations):
                 st_nlink=1,
                 st_uid=1000,
                 st_gid=1000,
-                st_size=378,
+                st_size=meta['size'],
                 st_atime=1428701319,
                 st_mtime=1428514886,
                 st_ctime=1428514886
@@ -60,19 +80,15 @@ class DissFilesystem(Operations):
             print('Unknown path', path)
 
     def read(self, path, length, offset, fh):
-        print('read', path)
         if path.startswith('/blobs/'):
-            id_ = path[1:]  # Strip heading /
+            id_ = id_from_path(path)
             print(path, length, offset, fh)
             data = get_content(id_)
-            return b''.join(data)
+            return b''.join(data)[offset:offset+length]
         elif path.startswith('/files/'):
-            filename = path[len('/files/'):]
-            print('filename', [filename])
-            id_ = meta_by_filename(filename)
-            print('id_', id_)
+            id_ = id_from_path(path)
             if id_:
-                return b''.join(get_content(id_))[:length]
+                return b''.join(get_content(id_))[offset:offset+length]
             else:
                 raise FuseOSError(errno.ENOENT)
 
