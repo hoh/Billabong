@@ -11,7 +11,7 @@ def list_ids():
         yield id_.replace('.json', '')
 
 
-def list_blobs():
+def list_paths():
     "List all blobs by their path."
     for id_ in list_ids():
         meta = get_meta(id_)
