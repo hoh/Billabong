@@ -2,16 +2,12 @@
 FUSE file system over the blob system.
 """
 
-import os
-import sys
 import errno
-import mmap  # temporary replacement for file access
 
 from fuse import FUSE, FuseOSError, Operations
 
 from diss import get_content
 from diss.meta import list_ids, list_filenames, get_meta, id_from_filename
-from diss.settings import STORAGE_PATH, METADATA_PATH
 
 
 def id_from_path(path):
@@ -28,7 +24,6 @@ def id_from_path(path):
         return id_
     else:
         raise FuseOSError(errno.ENOENT)
-
 
 
 class DissFilesystem(Operations):
