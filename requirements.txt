@@ -6,3 +6,5 @@ pytest-flakes
 pytest-pep8
 
 python-magic
+
+fusepy
