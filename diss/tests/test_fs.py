@@ -33,3 +33,8 @@ def test_readdir(fs):
 def test_read(fs):
     data = fs.read('/files/hello.txt', 100, 0, None)
     assert data == b"Hello world !\n\n"
+
+
+def test_getattr(fs):
+    assert fs.getattr('/').get('st_size')
+    assert fs.getattr('/files/hello.txt').get('st_size')
