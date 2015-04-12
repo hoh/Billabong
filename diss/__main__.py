@@ -1,7 +1,7 @@
 import os
 import sys
 from diss import add_file, get_content
-from diss.meta import list_blobs, get_meta, search_meta
+from diss.meta import list_filenames, get_meta, search_meta
 from diss.utils import dumps
 
 HELP = '''DIstributed Storage System
