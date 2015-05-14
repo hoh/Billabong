@@ -2,6 +2,7 @@
 import os
 import uuid
 import hashlib
+from Crypto import Random
 from Crypto.Cipher import AES
 from Crypto.Util import Counter
 
@@ -9,6 +10,13 @@ from .settings import STORAGE_PATH, TMPSTORAGE_PATH
 from .utils import read_in_chunks
 
 hashing = hashlib.sha256
+
+
+def random_key():
+    "Return a randomly generated AES key"
+    random = Random.new()
+    key = random.read(AES.key_size[2])
+    return key
 
 
 def copy_and_encrypt(filepath, key):
