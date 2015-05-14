@@ -1,5 +1,6 @@
 
 import os
+import uuid
 import hashlib
 from Crypto.Cipher import AES
 from Crypto.Util import Counter
@@ -13,7 +14,7 @@ hashing = hashlib.sha256
 def copy_and_encrypt(filepath, key):
     "Encrypt the file into the data store, and returns its id."
 
-    tmp_name = 'RANDOM_STUFF'
+    tmp_name = 'diss-{}'.format(uuid.uuid4())
     tmp_destination = os.path.join(TMPSTORAGE_PATH, tmp_name)
 
     source_hash = hashing()
