@@ -1,7 +1,15 @@
 import os
 import sys
+
+try:
+    from pygments import highlight
+    from pygments.lexers import JsonLexer
+    from pygments.formatters import TerminalFormatter
+except ImportError:
+    highlight = None
+
 from diss import add_file, get_content
-from diss.meta import list_filenames, get_meta, search_meta
+from diss.meta import list_ids, get_meta, search_meta
 from diss.utils import dumps
 
 HELP = '''DIstributed Storage System
@@ -17,7 +25,7 @@ dis search $TERM
 if len(sys.argv) > 1:
 
     if sys.argv[1] in ('ls', 'list'):
-        for i in list_blobs():
+        for i in list_ids():
             print(i)
 
     elif sys.argv[1] == 'add':
@@ -32,7 +40,13 @@ if len(sys.argv) > 1:
     elif sys.argv[1] == 'info':
         id_ = sys.argv[2]
         meta = get_meta(id_)
-        print(dumps(meta))
+
+        if highlight and '--no-color' not in sys.argv:
+            print(highlight(dumps(meta),
+                            JsonLexer(),
+                            TerminalFormatter()))
+        else:
+            print(dumps(meta))
 
     elif sys.argv[1] == 'echo':
         id_ = sys.argv[2]
