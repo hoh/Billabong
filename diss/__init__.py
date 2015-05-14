@@ -52,6 +52,6 @@ def add_file(filepath, *, key=None):
     return meta
 
 
-def get_content(id_):
+def get_content(id_, *, offset=0, length=None):
     key = b64decode(get_meta(id_)['key'])
-    return decrypt_blob(id_, key)
+    return decrypt_blob(id_, key, offset=offset, length=length)

@@ -78,7 +78,7 @@ class DissFilesystem(Operations):
         if path.startswith('/blobs/'):
             id_ = id_from_path(path)
             print(path, length, offset, fh)
-            data = get_content(id_)
+            data = get_content(id_, offset=offset, length=length)
             return b''.join(data)[offset:offset+length]
         elif path.startswith('/files/'):
             id_ = id_from_path(path)

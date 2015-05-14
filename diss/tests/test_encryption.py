@@ -1,6 +1,6 @@
 
-from diss.encryption import random_key, copy_and_encrypt
-from .testdata import ID
+from diss.encryption import random_key, copy_and_encrypt, decrypt_blob
+from .testdata import ID, ID_lorem
 
 
 def test_random_key():
@@ -12,3 +12,25 @@ def test_random_key():
 def test_copy_and_encrypt():
     id_ = copy_and_encrypt('hello.txt', key=b'0'*32)
     assert id_ == ID
+
+
+def test_decrypt_blob():
+    g = decrypt_blob(ID, b'0'*32)
+    data = b''.join(g)
+    assert data == b'Hello world !\n\n'
+
+
+def test_decrypt_offset():
+    offset = 340
+    length = 69
+    expected = open('lorem.txt', 'rb').read()[offset:offset+length]
+    assert expected == (b"Qui animated corpse, cricket bat max brucks "
+                        b"terribilem incessu zomby.")
+
+    id_ = copy_and_encrypt('lorem.txt', key=b'0'*32)
+    assert id_ == ID_lorem
+
+    g = decrypt_blob(id_, b'0'*32, offset=offset, length=length)
+
+    data = b''.join(g)
+    assert data == expected
