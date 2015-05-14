@@ -30,7 +30,6 @@ def add_file(filepath, *, key=None):
     file_hash = hashing()
     file_hash.update(open(filepath, 'rb').read())
 
-    # TODO: replace by a hash of the encrypted file
     id_ = copy_and_encrypt(filepath, key)
 
     meta = {
