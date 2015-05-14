@@ -1,5 +1,5 @@
 #!/bin/bash
 
 export PYTHONPATH=$(pwd):$PYTHONPATH
-py.test diss
+py.test --pep8 --flakes diss
 
