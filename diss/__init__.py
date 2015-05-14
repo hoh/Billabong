@@ -18,13 +18,14 @@ def save_metadata(meta):
     open(destination, 'w').write(dumps(meta))
 
 
-def add_file(filepath):
+def add_file(filepath, *, key=None):
     "Import a file into Dis."
 
     if not os.path.isfile(filepath):
         raise FileNotFoundError
 
-    key = b'0'*32  # random_key()
+    if key is None:
+        key = random_key()
 
     file_hash = hashing()
     file_hash.update(open(filepath, 'rb').read())

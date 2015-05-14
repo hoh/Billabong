@@ -7,7 +7,8 @@ HASH = "fc7d4f43945d94c874415e3bd9a6e181f8c84f8a36f586389405e391c01e48b2"
 
 
 def test_add_file():
-    meta = add_file('hello.txt')
+    # Test using a know replicable key:
+    meta = add_file('hello.txt', key=b'0'*32)
     assert meta
 
     assert meta['hash'].startswith('sha256-')
@@ -18,5 +19,5 @@ def test_add_file():
 
 
 def test_add_file_json():
-    meta = add_file('hello.txt')
+    meta = add_file('hello.txt', key=b'0'*32)
     assert len(json.dumps(meta, default=json_handler)) > 1  # JSON serializable
