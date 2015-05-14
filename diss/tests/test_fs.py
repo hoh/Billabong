@@ -1,8 +1,7 @@
 
-import os
 import pytest
 
-from fuse import FUSE, FuseOSError
+from fuse import FuseOSError
 
 from diss.fs import id_from_path, DissFilesystem
 from .testdata import ID
@@ -28,11 +27,18 @@ def test_readdir(fs):
     assert fs.readdir('/', None) == ['blobs', 'files']
     assert set(fs.readdir('/blobs', None)).issuperset([ID])
     assert set(fs.readdir('/files', None)).issuperset(['hello.txt'])
+    assert fs.readdir('/does_not_exist', None) == None
 
 
 def test_read(fs):
+    data = fs.read('/blobs/' + ID, 100, 0, None)
+    assert data == b"Hello world !\n\n"
+
     data = fs.read('/files/hello.txt', 100, 0, None)
     assert data == b"Hello world !\n\n"
+
+    with pytest.raises(FuseOSError):
+        fs.read('/files/does_not_exist', 100, 0, None)
 
 
 def test_getattr(fs):
