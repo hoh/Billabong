@@ -1,4 +1,6 @@
 
+import pytest
+
 import json
 from diss import add_file
 from diss.utils import json_handler
@@ -7,7 +9,7 @@ HASH = "fc7d4f43945d94c874415e3bd9a6e181f8c84f8a36f586389405e391c01e48b2"
 
 
 def test_add_file():
-    # Test using a know replicable key:
+    # Test using a know replicable :key:
     meta = add_file('hello.txt', key=b'0'*32)
     assert meta
 
@@ -16,6 +18,16 @@ def test_add_file():
 
     assert meta['info']['path']
     assert meta['info']['filename']
+
+
+def test_add_random_key():
+    meta = add_file('lorem.txt')
+    assert meta
+
+
+def test_add_file_not_found():
+    with pytest.raises(FileNotFoundError):
+        add_file('does not exist.txt')
 
 
 def test_add_file_json():
