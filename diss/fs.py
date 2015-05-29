@@ -79,13 +79,13 @@ class DissFilesystem(Operations):
             id_ = id_from_path(path)
             print(path, length, offset, fh)
             data = get_content(id_, offset=offset, length=length)
-            return b''.join(data)[offset:offset+length]
+            return b''.join(data)
         elif path.startswith('/files/'):
             id_ = id_from_path(path)
             if id_:
-                return b''.join(get_content(id_))[offset:offset+length]
+                return b''.join(get_content(id_, offset=offset, length=length))
             else:
                 raise FuseOSError(errno.ENOENT)
 
 if __name__ == '__main__':
-    FUSE(DissFilesystem(), '/home/okso/diss', foreground=True)
+    FUSE(DissFilesystem(), './mount_dissfs', foreground=True)

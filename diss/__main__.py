@@ -10,6 +10,7 @@ except ImportError:
 
 from diss import add_file, get_content
 from diss.meta import list_ids, get_meta, search_meta
+from diss.check import check_data
 from diss.utils import dumps
 
 HELP = '''DIstributed Storage System
@@ -20,6 +21,7 @@ dis get $HASH
 dis info $HASH
 dis echo $HASH
 dis search $TERM
+dis check
 '''
 
 if len(sys.argv) > 1:
@@ -63,6 +65,10 @@ if len(sys.argv) > 1:
         for i in search_meta(term):
             print(i)
 
+    elif sys.argv[1] == 'check':
+        # Check the validity of all blobs and metadata
+        for i in list_ids():
+            check_data(i)
     else:
         print('Unknown command')
 
