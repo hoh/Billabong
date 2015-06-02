@@ -7,7 +7,7 @@ import errno
 from fuse import FUSE, FuseOSError, Operations
 
 from diss import get_content
-from diss.meta import list_ids, list_filenames, get_meta, id_from_filename
+from diss.meta import list_records, list_filenames, get_meta, id_from_filename
 
 
 def id_from_path(path):
@@ -68,7 +68,7 @@ class DissFilesystem(Operations):
         if path == '/':
             return ['blobs', 'files']
         elif path == '/blobs':
-            return list_ids()
+            return list_records()
         elif path == '/files':
             return list_filenames()
         else:

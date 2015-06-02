@@ -1,5 +1,5 @@
 
-from diss.meta import (list_ids,
+from diss.meta import (list_records,
                        list_paths,
                        list_filenames,
                        get_meta,
@@ -9,8 +9,8 @@ from diss.meta import (list_ids,
 from .testdata import ID
 
 
-def test_list_ids():
-    ids = list(list_ids())
+def test_list_records():
+    ids = list(list_records())
     assert set(ids).issuperset([ID])
 
 

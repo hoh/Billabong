@@ -9,9 +9,10 @@ except ImportError:
     highlight = None
 
 from diss import add_file, get_content
-from diss.meta import list_ids, get_meta, search_meta
-from diss.check import check_data
+from diss.meta import list_records, get_meta, search_meta
+from diss.check import check_data, check_enc_data
 from diss.utils import dumps
+from diss.sync import push_blobs
 
 HELP = '''DIstributed Storage System
 
@@ -27,7 +28,7 @@ dis check
 if len(sys.argv) > 1:
 
     if sys.argv[1] in ('ls', 'list'):
-        for i in list_ids():
+        for i in list_records():
             print(i)
 
     elif sys.argv[1] == 'add':
@@ -67,8 +68,13 @@ if len(sys.argv) > 1:
 
     elif sys.argv[1] == 'check':
         # Check the validity of all blobs and metadata
-        for i in list_ids():
+        for i in list_records():
             check_data(i)
+            check_enc_data(i)
+
+    elif sys.argv[1] == 'push':
+        # Push blobs to sync storage
+        push_blobs()
     else:
         print('Unknown command')
 
