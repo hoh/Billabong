@@ -7,7 +7,7 @@ import errno
 from fuse import FUSE, FuseOSError, Operations
 
 from diss import get_content
-from diss.meta import list_records, list_filenames, get_meta, id_from_filename
+from diss.settings import inventory
 
 
 def id_from_path(path):
@@ -16,7 +16,7 @@ def id_from_path(path):
         id_ = path[len('/blobs/'):]
     elif path.startswith('/files/'):
         filename = path.split('/')[-1]
-        id_ = id_from_filename(filename)
+        id_ = inventory.id_from_filename(filename)
     else:
         id_ = None
 
@@ -50,7 +50,7 @@ class DissFilesystem(Operations):
         else:
             id_ = id_from_path(path)
             print('id_', path, id_)
-            meta = get_meta(id_)
+            meta = inventory.get_record(id_)
             return dict(
                 st_mode=33188,
                 st_ino=7093655,
@@ -68,9 +68,9 @@ class DissFilesystem(Operations):
         if path == '/':
             return ['blobs', 'files']
         elif path == '/blobs':
-            return list_records()
+            return inventory.list_record_ids()
         elif path == '/files':
-            return list_filenames()
+            return inventory.list_record_filenames()
         else:
             print('Unknown path', path)
 

@@ -9,7 +9,7 @@ except ImportError:
     highlight = None
 
 from diss import add_file, get_content
-from diss.meta import list_records, get_meta, search_meta
+from diss.settings import inventory
 from diss.check import check_data, check_enc_data
 from diss.utils import dumps
 from diss.sync import push_blobs
@@ -28,7 +28,7 @@ dis check
 if len(sys.argv) > 1:
 
     if sys.argv[1] in ('ls', 'list'):
-        for i in list_records():
+        for i in inventory.list_record_ids():
             print(i)
 
     elif sys.argv[1] == 'add':
@@ -42,7 +42,7 @@ if len(sys.argv) > 1:
 
     elif sys.argv[1] == 'info':
         id_ = sys.argv[2]
-        meta = get_meta(id_)
+        meta = inventory.get_record(id_)
 
         if highlight and '--no-color' not in sys.argv:
             print(highlight(dumps(meta),
@@ -63,12 +63,12 @@ if len(sys.argv) > 1:
 
     elif sys.argv[1] == 'search':
         term = sys.argv[2]
-        for i in search_meta(term):
+        for i in inventory.search(term):
             print(i)
 
     elif sys.argv[1] == 'check':
         # Check the validity of all blobs and metadata
-        for i in list_records():
+        for i in inventory.list_record_ids():
             check_data(i)
             check_enc_data(i)
 

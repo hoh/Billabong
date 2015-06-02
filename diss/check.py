@@ -2,21 +2,19 @@
 Check the integrity of Diss data
 """
 
-import os
 import logging
 from base64 import b64decode
 
 from .encryption import hashing, decrypt_blob
-from .meta import get_meta
 from .utils import read_in_chunks
 from .exceptions import CheckError
-from .settings import STORAGE_PATH
+from .settings import inventory, storage
 
 
 def check_data(id=None, meta=None, raises=False):
 
     if id and not meta:
-        meta = get_meta(id)
+        meta = inventory.get_record(id)
     elif meta and not id:
         id = meta['id']
     else:
@@ -32,7 +30,7 @@ def check_data(id=None, meta=None, raises=False):
 def check_enc_data(id, raises=False):
     "Check the validity of an encrypted blob"
 
-    enc_path = os.path.join(STORAGE_PATH, id)
+    enc_path = storage._blob_path(id)
     enc_file = open(enc_path, 'rb')
     enc_hash = hashing()
 

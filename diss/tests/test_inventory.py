@@ -1,31 +1,26 @@
 
-from diss.meta import (list_records,
-                       list_paths,
-                       list_filenames,
-                       get_meta,
-                       search_meta,
-                       id_from_filename
-                       )
+# from diss.inventory import Inventory
+from diss.settings import inventory
 from .testdata import ID
 
 
 def test_list_records():
-    ids = list(list_records())
+    ids = list(inventory.list_record_ids())
     assert set(ids).issuperset([ID])
 
 
 def test_list_paths():
-    paths = list(list_paths())
+    paths = list(inventory.list_record_paths())
     assert set(paths).issuperset(['hello.txt'])
 
 
 def test_list_filenames():
-    filenames = list(list_filenames())
+    filenames = list(inventory.list_record_filenames())
     assert set(filenames).issuperset(['hello.txt'])
 
 
 def test_get_meta():
-    meta = get_meta(ID)
+    meta = inventory.get_record(ID)
     expected = {
         'info': {'filename': 'hello.txt',
                  'mimetype': 'text/plain',
@@ -38,16 +33,16 @@ def test_get_meta():
 
 
 def test_search_meta():
-    ids = list(search_meta('hello'))
+    ids = list(inventory.search('hello'))
     assert set(ids).issuperset([ID])
 
-    non_existing_ids = list(search_meta('DOES NOT EXIST'))
+    non_existing_ids = list(inventory.search('DOES NOT EXIST'))
     assert non_existing_ids == []
 
 
 def test_id_from_filename():
-    id_ = id_from_filename('hello.txt')
+    id_ = inventory.id_from_filename('hello.txt')
     assert id_ == ID
 
-    non_existing_id = id_from_filename('DOES NOT EXIST')
+    non_existing_id = inventory.id_from_filename('DOES NOT EXIST')
     assert non_existing_id is None

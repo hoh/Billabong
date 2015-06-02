@@ -5,17 +5,10 @@ import magic
 from base64 import b64encode, b64decode
 from datetime import datetime
 
-from .settings import METADATA_PATH
-from .meta import get_meta
+from .settings import inventory
 from .encryption import random_key, copy_and_encrypt, decrypt_blob
-from .utils import dumps
 
 hashing = hashlib.sha256
-
-
-def save_metadata(meta):
-    destination = os.path.join(METADATA_PATH, meta['id'] + '.json')
-    open(destination, 'w').write(dumps(meta))
 
 
 def add_file(filepath, *, key=None):
@@ -47,11 +40,11 @@ def add_file(filepath, *, key=None):
             }
         }
 
-    save_metadata(meta)
+    inventory.save_record(meta)
 
     return meta
 
 
 def get_content(id_, *, offset=0, length=None):
-    key = b64decode(get_meta(id_)['key'])
+    key = b64decode(inventory.get_record(id_)['key'])
     return decrypt_blob(id_, key, offset=offset, length=length)
