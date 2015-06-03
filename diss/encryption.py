@@ -6,7 +6,7 @@ from Crypto import Random
 from Crypto.Cipher import AES
 from Crypto.Util import Counter
 
-from .settings import STORAGE_PATH, TMPSTORAGE_PATH
+from .settings import (storage, TMPSTORAGE_PATH)
 from .utils import read_in_chunks
 
 hashing = hashlib.sha256
@@ -41,9 +41,9 @@ def copy_and_encrypt(filepath, key):
 
     # Now that we have the hash of the encrypted file, move the
     # encrypted file to the storage and return the hash.
+    id_ = enc_hash.hexdigest()
 
-    destination = os.path.join(STORAGE_PATH, enc_hash.hexdigest())
-    os.rename(tmp_destination, destination)
+    storage.import_file(tmp_destination, id_)
 
     return enc_hash.hexdigest()
 
@@ -56,21 +56,20 @@ def counter_for_offset(offset):
 
 def decrypt_blob(id_, key, offset=0, length=None):
     "Decrypt the content of a blob through a generator."
-    enc_path = os.path.join(STORAGE_PATH, id_)
-    enc_file = open(enc_path, 'rb')
 
     modulo = offset % 16
-    if offset:
-        # Compute a file offset, might be lower than the real offset
-        file_offset = offset - modulo
-        enc_file.seek(file_offset)
+    # Compute a file offset, might be lower than the real offset
+    file_offset = offset - modulo if offset else 0
 
     end = offset + length if length else None
     ctr = counter_for_offset(offset)
 
     crypto = AES.new(key, AES.MODE_CTR, counter=ctr)
 
-    for i, enc_chunk in enumerate(read_in_chunks(enc_file, chunk_size=10)):
+    chunks_generator = storage.read_in_chunks(id_, offset=file_offset,
+                                              chunk_size=10)
+
+    for i, enc_chunk in chunks_generator:
         chunk = crypto.decrypt(enc_chunk)
 
         if end is not None:

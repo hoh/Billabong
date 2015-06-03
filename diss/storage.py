@@ -2,6 +2,7 @@
 """
 
 import os
+from .utils import read_in_chunks
 
 
 class Storage:
@@ -19,6 +20,14 @@ class Storage:
         "Delete every blob from the storage"
         for blob_id in self.list_blob_ids():
             self.delete(blob_id)
+
+    def import_file(self, filename):
+        "Add an encrypted blob file to the storage"
+        raise NotImplementedError
+
+    def read_in_chunks(self, id_, chunk_size=1024):
+        "Read a blob chunk by chunk"
+        raise NotImplementedError
 
 
 class FolderStorage(Storage):
@@ -40,3 +49,14 @@ class FolderStorage(Storage):
     def delete(self, id_):
         "Delete a blob from the storage"
         os.remove(self._blob_path(id_))
+
+    def import_file(self, filepath, id_):
+        "Add an encrypted blob file to the storage by moving the file."
+        os.rename(filepath, self._blob_path(id_))
+
+    def read_in_chunks(self, id_, offset=0, chunk_size=1024):
+        "Read a blob file chunk by chunk."
+        path = self._blob_path(id_)
+        fd = open(path, 'rb')
+        fd.seek(offset)
+        return enumerate(read_in_chunks(fd, chunk_size))
