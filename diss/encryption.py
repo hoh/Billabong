@@ -43,7 +43,11 @@ def copy_and_encrypt(filepath, key):
     # encrypted file to the storage and return the hash.
     id_ = enc_hash.hexdigest()
 
-    storage.import_file(tmp_destination, id_)
+    source_file.close()
+    dest_file.close()
+
+    storage.import_blob(open(tmp_destination, 'rb'), id_)
+    os.remove(tmp_destination)
 
     return enc_hash.hexdigest()
 

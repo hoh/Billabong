@@ -10,7 +10,12 @@ dis list
 ## Todo / Next steps
 
 * Check data integrity
- * Encrypted data hash
- * Clear data hash
+ * Encrypted data hash - done
+ * Clear data hash - done
  * JSON schema
+
+## Name suggestions
+
+* rill: small stream, does cracks
+* billabong
 

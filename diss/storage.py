@@ -2,6 +2,7 @@
 """
 
 import os
+from shutil import copyfileobj
 from .utils import read_in_chunks
 
 
@@ -21,13 +22,19 @@ class Storage:
         for blob_id in self.list_blob_ids():
             self.delete(blob_id)
 
-    def import_file(self, filename):
+    def import_blob(self, filename):
         "Add an encrypted blob file to the storage"
         raise NotImplementedError
 
     def read_in_chunks(self, id_, chunk_size=1024):
         "Read a blob chunk by chunk"
         raise NotImplementedError
+
+    def missing_from(self, other_storage):
+        "Return the ids present locally but not on the other storage."
+        blobs_self = set(self.list_blob_ids())
+        blobs_other = set(other_storage.list_blob_ids())
+        return blobs_self - blobs_other
 
 
 class FolderStorage(Storage):
@@ -50,9 +57,10 @@ class FolderStorage(Storage):
         "Delete a blob from the storage"
         os.remove(self._blob_path(id_))
 
-    def import_file(self, filepath, id_):
-        "Add an encrypted blob file to the storage by moving the file."
-        os.rename(filepath, self._blob_path(id_))
+    def import_blob(self, blobfile, id_):
+        "Add an encrypted blob file to the storage by copying the file."
+        copyfileobj(blobfile,
+                    open(self._blob_path(id_), 'wb'))
 
     def read_in_chunks(self, id_, offset=0, chunk_size=1024):
         "Read a blob file chunk by chunk."
@@ -60,3 +68,9 @@ class FolderStorage(Storage):
         fd = open(path, 'rb')
         fd.seek(offset)
         return enumerate(read_in_chunks(fd, chunk_size))
+
+    def push_to(self, other_storage):
+        "Push local blobs to another storage"
+        for id_ in self.missing_from(other_storage):
+            blob = open(self._blob_path(id_), 'rb')
+            other_storage.import_blob(blob)
