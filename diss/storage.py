@@ -22,7 +22,7 @@ class Storage:
         for blob_id in self.list_blob_ids():
             self.delete(blob_id)
 
-    def import_blob(self, filename):
+    def import_blob(self, id_, filename):
         "Add an encrypted blob file to the storage"
         raise NotImplementedError
 
@@ -35,6 +35,14 @@ class Storage:
         blobs_self = set(self.list_blob_ids())
         blobs_other = set(other_storage.list_blob_ids())
         return blobs_self - blobs_other
+
+    def push_to(self, other_storage):
+        "Push local blobs to another storage"
+        raise NotImplementedError
+
+    def push_blob_to(self, id_, other_storage):
+        "Push a local blob to another storage."
+        raise NotImplementedError
 
 
 class FolderStorage(Storage):
@@ -57,7 +65,7 @@ class FolderStorage(Storage):
         "Delete a blob from the storage"
         os.remove(self._blob_path(id_))
 
-    def import_blob(self, blobfile, id_):
+    def import_blob(self, id_, blobfile):
         "Add an encrypted blob file to the storage by copying the file."
         copyfileobj(blobfile,
                     open(self._blob_path(id_), 'wb'))
@@ -72,5 +80,9 @@ class FolderStorage(Storage):
     def push_to(self, other_storage):
         "Push local blobs to another storage"
         for id_ in self.missing_from(other_storage):
-            blob = open(self._blob_path(id_), 'rb')
-            other_storage.import_blob(blob)
+            self.push_blob_to(id_, other_storage)
+
+    def push_blob_to(self, id_, other_storage):
+        "Push a local blob to another storage"
+        blobfile = open(self._blob_path(id_), 'rb')
+        other_storage.import_blob(id_, blobfile)

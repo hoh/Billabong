@@ -5,16 +5,7 @@ from .settings import storage, remote_storages
 
 def push_blobs():
     for remote in remote_storages:
-        records_local = set(storage.list_blob_ids())
-        records_remote = set(remote.list_blob_ids())
-        to_sync = records_local - records_remote
-
-        print('records_local', records_local)
-        print('records_remote', records_remote)
-        print('to_sync', to_sync)
-
-        for id_ in to_sync:
-            push_blob(id_, storage, remote)
+        storage.push_to(remote)
 
 
 def push_blob(id_, storage, remote):
