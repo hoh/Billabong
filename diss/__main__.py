@@ -17,6 +17,7 @@ from diss.sync import push_blobs
 HELP = '''DIstributed Storage System
 
 dis ls
+dis lsblobs
 dis add $SOMEFILE
 dis get $HASH
 dis info $HASH
@@ -28,6 +29,13 @@ dis check
 if len(sys.argv) > 1:
 
     if sys.argv[1] in ('ls', 'list'):
+        format_ = "{:>8} {:>8} {:>8}"
+        for r in inventory.list_records():
+            print(format_.format(r['id'][:8],
+                                 r['size'],
+                                 r['info']['filename']))
+
+    elif sys.argv[1] == 'lsblobs':
         for i in inventory.list_record_ids():
             print(i)
 

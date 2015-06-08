@@ -55,6 +55,12 @@ class Inventory:
             if term in dumps(record):
                 yield record['id']
 
+    def search_id(self, partial_id):
+        "Search for an id given the first part of an id."
+        for record_id in self.list_record_ids():
+            if record_id.startswith(partial_id):
+                yield record_id
+
     def id_from_filename(self, filename):
         "Return the id of the first record matching filename"
         for record in self.list_records():
