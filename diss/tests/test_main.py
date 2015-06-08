@@ -10,5 +10,10 @@ def run(cmd):
 
 def test_cli():
     run('ls')
+    run('blobs')
     run('info ' + ID)
     run('search txt')
+    run('check')
+    run('push')
+    run('pull')
+    run('echo ' + ID)

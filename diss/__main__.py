@@ -16,7 +16,7 @@ from diss import add_file, get_content
 from diss.settings import inventory
 from diss.check import check_data, check_enc_data
 from diss.utils import dumps
-from diss.sync import push_blobs
+from diss.sync import push_blobs, pull_blobs
 
 
 def print_record(record):
@@ -96,6 +96,11 @@ def push():
     "Push blobs to sync storage"
     push_blobs()
 
+
+@command
+def pull():
+    "Pull blobs from sync storage"
+    pull_blobs()
 
 if __name__ == '__main__':
     run()
