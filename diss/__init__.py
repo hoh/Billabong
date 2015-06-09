@@ -1,14 +1,12 @@
 
 import os
-import hashlib
 import magic
 from base64 import b64encode, b64decode
 from datetime import datetime
 
 from .settings import inventory
 from .encryption import random_key, copy_and_encrypt, decrypt_blob
-
-hashing = hashlib.sha256
+from .check import compute_hash
 
 
 def add_file(filepath, *, key=None):
@@ -23,8 +21,8 @@ def add_file(filepath, *, key=None):
     if key is None:
         key = random_key()
 
-    file_hash = hashing()
-    file_hash.update(open(filepath, 'rb').read())
+    with open(filepath, 'rb') as source_file:
+        file_hash = compute_hash(source_file)
 
     id_ = copy_and_encrypt(filepath, key)
 

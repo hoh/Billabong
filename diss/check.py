@@ -11,6 +11,16 @@ from .exceptions import CheckError
 from .settings import inventory, storage
 
 
+def compute_hash(file_object, chunk_size=1024):
+    """Compute the hash of the content of a file object using
+    the given hashing function.
+    """
+    file_hash = hashing()
+    for chunk in read_in_chunks(file_object, chunk_size):
+        file_hash.update(chunk)
+    return file_hash
+
+
 def check_data(id=None, meta=None, raises=False):
 
     if id and not meta:
