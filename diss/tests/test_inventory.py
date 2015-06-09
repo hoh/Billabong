@@ -46,3 +46,11 @@ def test_id_from_filename():
 
     non_existing_id = inventory.id_from_filename('DOES NOT EXIST')
     assert non_existing_id is None
+
+
+def test_delete_everything():
+    inventory.delete_everything(confirm=True)
+
+
+def test_search_id():
+    inventory.search_id(ID[:10])
