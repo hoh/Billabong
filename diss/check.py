@@ -41,11 +41,8 @@ def check_enc_data(id, raises=False):
     "Check the validity of an encrypted blob"
 
     enc_path = storage._blob_path(id)
-    enc_file = open(enc_path, 'rb')
-    enc_hash = hashing()
-
-    for enc_chunk in read_in_chunks(enc_file):
-        enc_hash.update(enc_chunk)
+    with open(enc_path, 'rb') as enc_file:
+        enc_hash = compute_hash(enc_file)
 
     if id != enc_hash.hexdigest():
         if raises:
