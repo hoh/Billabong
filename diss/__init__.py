@@ -14,6 +14,9 @@ hashing = hashlib.sha256
 def add_file(filepath, *, key=None):
     "Import a file into Dis."
 
+    # Resolve symlinks
+    realpath = os.path.realpath(filepath)
+
     if not os.path.isfile(filepath):
         raise FileNotFoundError
 
@@ -28,13 +31,13 @@ def add_file(filepath, *, key=None):
     meta = {
         'key': b64encode(key),
         'hash': 'sha256-' + file_hash.hexdigest(),
-        'size': os.path.getsize(filepath),
+        'size': os.path.getsize(realpath),
         'timestamp': datetime.now(),
         'id': id_,
 
         'info': {
-            'type': magic.from_file(filepath).decode(),
-            'mimetype': magic.from_file(filepath, mime=True).decode(),
+            'type': magic.from_file(realpath).decode(),
+            'mimetype': magic.from_file(realpath, mime=True).decode(),
             'filename': os.path.basename(filepath),
             'path': filepath,
             }
