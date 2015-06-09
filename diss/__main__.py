@@ -102,5 +102,15 @@ def pull():
     "Pull blobs from sync storage"
     pull_blobs()
 
+
+@command
+def status():
+    "Print a global status of the inventory and storage."
+    print("Inventory:")
+    print("  {:>4} records".format(
+          len(list(inventory.list_record_ids()))))
+    print("  {:>4} bytes total".format(
+          sum(i['size'] for i in inventory.list_records())))
+
 if __name__ == '__main__':
     run()
