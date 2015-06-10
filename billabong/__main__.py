@@ -136,9 +136,9 @@ def status():
 
 
 @command
-def mount(path=None):
+def mount(path=None, foreground=False):
     from billabong.fs import mount_fuse
-    mount_fuse(path)
+    mount_fuse(path, foreground)
 
 
 if __name__ == '__main__':
