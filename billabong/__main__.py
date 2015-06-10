@@ -66,9 +66,10 @@ def blobs():
 
 
 @command
-def add(target):
-    record = add_file(target)
-    print_record(record)
+def add(*targets):
+    for target in targets:
+        record = add_file(target)
+        print_record(record)
 
 
 @command
@@ -77,15 +78,16 @@ def get(id_):
 
 
 @command
-def info(id_):
-    meta = inventory.get_record(id_)
+def info(*ids):
+    for id_ in ids:
+        meta = inventory.get_record(id_)
 
-    if highlight and '--no-color' not in sys.argv:
-        print(highlight(dumps(meta),
-                        JsonLexer(),
-                        TerminalFormatter()))
-    else:
-        print(dumps(meta))
+        if highlight and '--no-color' not in sys.argv:
+            print(highlight(dumps(meta),
+                            JsonLexer(),
+                            TerminalFormatter()))
+        else:
+            print(dumps(meta))
 
 
 @command
