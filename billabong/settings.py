@@ -8,7 +8,7 @@ from .inventory import load_inventory
 def load_settings(path):
     return json.load(open(path))
 
-TMPSTORAGE_PATH = './tmpdata'
+TMPSTORAGE_PATH = './data/tmp'
 
 settings = load_settings('billabong/settings.json')
 
