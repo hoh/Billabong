@@ -1,21 +1,29 @@
+# Billabong
 
+A reliable, distributed, encrypted storage and backup solution for all of
+your photos, videos, music and other static data.
 
 ## Usage
 
 ```
-dis add _myfile_
-dis list
+alias bong="python3 -m billabong"
 ```
 
-## Todo / Next steps
+```
+Usage: bong COMMAND <options>
 
-* Check data integrity
- * Encrypted data hash - done
- * Clear data hash - done
- * JSON schema
+Available commands:
+ add
+ blobs
+ check   Check the validity of all blobs and metadata
+ echo
+ get
+ info
+ ls
+ pull    Pull blobs from sync storage
+ push    Push blobs to sync storage
+ search
+ status  Print a global status of the inventory and storage.
 
-## Name suggestions
-
-* rill: small stream, does cracks
-* billabong
-
+Use 'bong <command> --help' for individual command help.
+```
