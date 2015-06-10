@@ -1,18 +1,20 @@
 
-from .storage import FolderStorage
-from .inventory import FolderInventory
+import json
 
-STORAGE_PATH = './data'
+from .storage import load_storage
+from .inventory import load_inventory
+
+
+def load_settings(path):
+    return json.load(open(path))
+
 TMPSTORAGE_PATH = './tmpdata'
-METADATA_PATH = './meta'
 
-REMOTE_LOCATION = './remote'
+settings = load_settings('diss/settings.json')
 
-
-storage = FolderStorage(STORAGE_PATH)
-inventory = FolderInventory(METADATA_PATH)
+inventory = load_inventory(settings['inventory'])
+storage = load_storage(settings['storage'])
 
 
-remote_storages = [
-    FolderStorage(REMOTE_LOCATION)
-]
+remote_storages = [load_storage(r)
+                   for r in settings.get('storages', ())]

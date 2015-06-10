@@ -97,3 +97,11 @@ class FolderInventory(Inventory):
     def save_record(self, record):
         destination = self._record_path(record['id'])
         open(destination, 'w').write(dumps(record))
+
+
+def load_inventory(settings):
+    type_ = settings['type']
+    args = settings.get('args', {})
+
+    if type_ == 'FolderInventory':
+        return FolderInventory(**args)

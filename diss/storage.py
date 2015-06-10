@@ -86,3 +86,11 @@ class FolderStorage(Storage):
         "Push a local blob to another storage"
         blobfile = open(self._blob_path(id_), 'rb')
         other_storage.import_blob(id_, blobfile)
+
+
+def load_storage(settings):
+    type_ = settings['type']
+    args = settings.get('args', {})
+
+    if type_ == 'FolderStorage':
+        return FolderStorage(**args)
