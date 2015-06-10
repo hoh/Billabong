@@ -16,18 +16,28 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
 import json
 
 from .storage import load_storage
 from .inventory import load_inventory
 
+settings_path_candidates = [
+    "./billabong.json",
+    os.path.expanduser("~/.config/billabong.json"),
+    "/etc/billabong.json",
+]
 
-def load_settings(path):
-    return json.load(open(path))
+for candidate in settings_path_candidates:
+    if os.path.isfile(candidate):
+        settings_path = candidate
+        break
+else:
+    raise FileNotFoundError("Billabong configuration file not found.")
 
-TMPSTORAGE_PATH = './data/tmp'
+settings = json.load(open(settings_path))
 
-settings = load_settings('billabong/settings.json')
+TMPSTORAGE_PATH = settings.get('tmp_directory', '/tmp')
 
 inventory = load_inventory(settings['inventory'])
 storage = load_storage(settings['storage'])

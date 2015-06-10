@@ -10,5 +10,6 @@
     "storages": [
         {"type": "FolderStorage", "args": {"path": "data/remote"}
      }
-    ]
+    ],
+    "tmp_directory": "/tmp"
 }
