@@ -1,7 +1,10 @@
 
 from diss.check import check_data
-from .testdata import ID
+
+from .fixtures import record
+assert record
 
 
-def test_check_data():
+def test_check_data(record):
+    ID = record['id']
     check_data(id=ID)

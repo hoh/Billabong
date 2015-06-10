@@ -1,10 +1,11 @@
 
-# import json
 from diss.settings import inventory
-# from diss.utils import json_handler
-from .testdata import ID
+
+from .fixtures import record
+assert record
 
 
-def test_get_meta():
-    meta = inventory.get_record(ID)
+def test_get_meta(record):
+    id_ = record['id']
+    meta = inventory.get_record(id_)
     assert meta

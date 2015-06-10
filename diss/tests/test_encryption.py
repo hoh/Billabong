@@ -1,6 +1,8 @@
 
 from diss.encryption import random_key, copy_and_encrypt, decrypt_blob
-from .testdata import ID, ID_lorem
+
+from .fixtures import record
+assert record
 
 
 def test_random_key():
@@ -9,13 +11,14 @@ def test_random_key():
     assert type(key) is bytes
 
 
-def test_copy_and_encrypt():
-    id_ = copy_and_encrypt('hello.txt', key=b'0'*32)
-    assert id_ == ID
+def test_copy_and_encrypt(record):
+    blob_id_ = copy_and_encrypt('hello.txt', key=b'0'*32)
+    assert blob_id_ == record['blobs'][0]
 
 
-def test_decrypt_blob():
-    g = decrypt_blob(ID, b'0'*32)
+def test_decrypt_blob(record):
+    blob_id = record['blobs'][0]
+    g = decrypt_blob(blob_id, b'0'*32)
     data = b''.join(g)
     assert data == b'Hello world !\n\n'
 
@@ -28,7 +31,6 @@ def test_decrypt_offset():
                         b"terribilem incessu zomby.")
 
     id_ = copy_and_encrypt('lorem.txt', key=b'0'*32)
-    assert id_ == ID_lorem
 
     g = decrypt_blob(id_, b'0'*32, offset=offset, length=length)
 

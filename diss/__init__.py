@@ -1,6 +1,7 @@
 
 import os
 import magic
+from uuid import uuid4
 from base64 import b64encode, b64decode
 from datetime import datetime
 
@@ -24,14 +25,15 @@ def add_file(filepath, *, key=None):
     with open(filepath, 'rb') as source_file:
         file_hash = compute_hash(source_file)
 
-    id_ = copy_and_encrypt(filepath, key)
+    blob_hash = copy_and_encrypt(filepath, key)
 
     meta = {
         'key': b64encode(key),
         'hash': 'sha256-' + file_hash.hexdigest(),
+        'blobs': [blob_hash],
         'size': os.path.getsize(realpath),
         'timestamp': datetime.now(),
-        'id': id_,
+        'id': uuid4().hex,
 
         'info': {
             'type': magic.from_file(realpath).decode(),
@@ -47,5 +49,7 @@ def add_file(filepath, *, key=None):
 
 
 def get_content(id_, *, offset=0, length=None):
-    key = b64decode(inventory.get_record(id_)['key'])
-    return decrypt_blob(id_, key, offset=offset, length=length)
+    record = inventory.get_record(id_)
+    key = b64decode(record['key'])
+    blob_id = record['blobs'][0]
+    return decrypt_blob(blob_id, key, offset=offset, length=length)

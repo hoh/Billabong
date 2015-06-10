@@ -61,9 +61,9 @@ class FolderStorage(Storage):
         for id_ in os.listdir(self.path):
             yield id_
 
-    def delete(self, id_):
+    def delete(self, blob_id):
         "Delete a blob from the storage"
-        os.remove(self._blob_path(id_))
+        os.remove(self._blob_path(blob_id))
 
     def import_blob(self, id_, blobfile):
         "Add an encrypted blob file to the storage by copying the file."

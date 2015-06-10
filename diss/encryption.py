@@ -56,7 +56,7 @@ def counter_for_offset(offset):
     return Counter.new(128, initial_value=initial_value)
 
 
-def decrypt_blob(id_, key, offset=0, length=None):
+def decrypt_blob(blob_id, key, offset=0, length=None):
     "Decrypt the content of a blob through a generator."
 
     modulo = offset % 16
@@ -68,7 +68,7 @@ def decrypt_blob(id_, key, offset=0, length=None):
 
     crypto = AES.new(key, AES.MODE_CTR, counter=ctr)
 
-    chunks_generator = storage.read_in_chunks(id_, offset=file_offset,
+    chunks_generator = storage.read_in_chunks(blob_id, offset=file_offset,
                                               chunk_size=10)
 
     for i, enc_chunk in chunks_generator:

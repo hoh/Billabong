@@ -30,17 +30,18 @@ def check_data(id=None, meta=None, raises=False):
     else:
         raise ValueError("Missing value for 'id' or 'meta'.")
 
-    check_enc_data(id)
+    blob_id = meta['blobs'][0]
+    check_enc_data(blob_id)
 
     key = b64decode(meta['key'])
     hash = meta['hash']
-    check_clear_data(id, key, hash)
+    check_clear_data(blob_id, key, hash)
 
 
-def check_enc_data(id, raises=False):
+def check_enc_data(blob_id, raises=False):
     "Check the validity of an encrypted blob"
 
-    enc_path = storage._blob_path(id)
+    enc_path = storage._blob_path(blob_id)
     with open(enc_path, 'rb') as enc_file:
         enc_hash = compute_hash(enc_file)
 

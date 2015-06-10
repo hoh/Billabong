@@ -8,10 +8,10 @@ def push_blobs():
         storage.push_to(remote)
 
 
-def push_blob(id_, storage, remote):
-    print('pushing blob', id_)
-    path_local = storage._blob_path(id_)
-    path_remote = remote._blob_path(id_)
+def push_blob(blob_id, storage, remote):
+    print('pushing blob', blob_id)
+    path_local = storage._blob_path(blob_id)
+    path_remote = remote._blob_path(blob_id)
     copy2(path_local, path_remote)
 
 

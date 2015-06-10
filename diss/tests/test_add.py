@@ -22,12 +22,15 @@ def test_add_file():
     assert meta['info']['path']
     assert meta['info']['filename']
 
+    inventory.delete(meta['id'])
+    storage.delete(meta['blobs'][0])
+
 
 def test_add_random_key():
     meta = add_file('lorem.txt')
     assert meta
     inventory.delete(meta['id'])
-    storage.delete(meta['id'])
+    storage.delete(meta['blobs'][0])
 
 
 def test_add_file_not_found():
@@ -38,3 +41,5 @@ def test_add_file_not_found():
 def test_add_file_json():
     meta = add_file('hello.txt', key=b'0'*32)
     assert len(json.dumps(meta, default=json_handler)) > 1  # JSON serializable
+    inventory.delete(meta['id'])
+    storage.delete(meta['blobs'][0])

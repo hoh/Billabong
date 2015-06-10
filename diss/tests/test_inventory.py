@@ -1,25 +1,28 @@
 
-# from diss.inventory import Inventory
 from diss.settings import inventory
-from .testdata import ID
+
+from .fixtures import record
+assert record
 
 
-def test_list_records():
+def test_list_records(record):
+    ID = record['id']
     ids = list(inventory.list_record_ids())
     assert set(ids).issuperset([ID])
 
 
-def test_list_paths():
+def test_list_paths(record):
     paths = list(inventory.list_record_paths())
     assert set(paths).issuperset(['hello.txt'])
 
 
-def test_list_filenames():
+def test_list_filenames(record):
     filenames = list(inventory.list_record_filenames())
     assert set(filenames).issuperset(['hello.txt'])
 
 
-def test_get_meta():
+def test_get_meta(record):
+    ID = record['id']
     meta = inventory.get_record(ID)
     expected = {
         'info': {'filename': 'hello.txt',
@@ -32,7 +35,8 @@ def test_get_meta():
         assert meta[key] == expected[key]
 
 
-def test_search_meta():
+def test_search_meta(record):
+    ID = record['id']
     ids = list(inventory.search('hello'))
     assert set(ids).issuperset([ID])
 
@@ -40,7 +44,8 @@ def test_search_meta():
     assert non_existing_ids == []
 
 
-def test_id_from_filename():
+def test_id_from_filename(record):
+    ID = record['id']
     id_ = inventory.id_from_filename('hello.txt')
     assert id_ == ID
 
@@ -52,5 +57,6 @@ def test_delete_everything():
     inventory.delete_everything(confirm=True)
 
 
-def test_search_id():
+def test_search_id(record):
+    ID = record['id']
     inventory.search_id(ID[:10])

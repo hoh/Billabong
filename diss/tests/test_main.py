@@ -1,6 +1,8 @@
 
 import os
-from .testdata import ID
+
+from .fixtures import record
+assert record
 
 
 def run(cmd):
@@ -8,7 +10,9 @@ def run(cmd):
     os.system('python -m diss ' + cmd)
 
 
-def test_cli():
+def test_cli(record):
+    ID = record['id']
+
     run('ls')
     run('blobs')
     run('info ' + ID)
