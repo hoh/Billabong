@@ -105,5 +105,9 @@ class BillabongFilesystem(Operations):
             else:
                 raise FuseOSError(errno.ENOENT)
 
-if __name__ == '__main__':
-    FUSE(BillabongFilesystem(), settings['mount'], foreground=True)
+
+def mount_fuse(path=None, foreground=True):
+    if path is None:
+        path = settings['mount']
+
+    FUSE(BillabongFilesystem(), path, foreground=foreground)

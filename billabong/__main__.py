@@ -134,5 +134,12 @@ def status():
     print("  {:>4} bytes total".format(
           sum(i['size'] for i in inventory.list_records())))
 
+
+@command
+def mount(path=None):
+    from billabong.fs import mount_fuse
+    mount_fuse(path)
+
+
 if __name__ == '__main__':
     run()
