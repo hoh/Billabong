@@ -8,3 +8,4 @@ pytest-pep8
 python-magic
 
 fusepy
+baker
