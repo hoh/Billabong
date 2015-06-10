@@ -1,2 +1,2 @@
 #!/bin/bash
-when-changed -r diss/ "clear; git status; git --no-pager diff"
+when-changed -r billabong/ "clear; git status; git --no-pager diff"

@@ -22,7 +22,7 @@ def random_key():
 def copy_and_encrypt(filepath, key):
     "Encrypt the file into the data store, and returns its id."
 
-    tmp_name = 'diss-{}'.format(uuid.uuid4())
+    tmp_name = 'billabong-{}.part'.format(uuid.uuid4())
     tmp_destination = os.path.join(TMPSTORAGE_PATH, tmp_name)
 
     source_hash = hashing()

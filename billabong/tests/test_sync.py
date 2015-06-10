@@ -1,6 +1,6 @@
 
-from diss.settings import storage, remote_storages
-from diss.sync import push_blobs, push_blob
+from billabong.settings import storage, remote_storages
+from billabong.sync import push_blobs, push_blob
 
 from .fixtures import record
 assert record

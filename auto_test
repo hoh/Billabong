@@ -1,2 +1,2 @@
 #!/bin/bash
-when-changed -r diss/ "clear; ./test"
+when-changed -r billabong/ "clear; ./test"

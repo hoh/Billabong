@@ -1,5 +1,5 @@
 
-from diss.check import check_data
+from billabong.check import check_data
 
 from .fixtures import record
 assert record

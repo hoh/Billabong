@@ -3,7 +3,7 @@ import pytest
 
 from fuse import FuseOSError
 
-from diss.fs import id_from_path, DissFilesystem
+from billabong.fs import id_from_path, BillabongFilesystem
 
 from .fixtures import record
 assert record
@@ -11,7 +11,7 @@ assert record
 
 @pytest.fixture
 def fs():
-    return DissFilesystem()
+    return BillabongFilesystem()
 
 
 def test_id_from_path(record):

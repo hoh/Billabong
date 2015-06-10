@@ -1,5 +1,5 @@
 
-from diss.encryption import random_key, copy_and_encrypt, decrypt_blob
+from billabong.encryption import random_key, copy_and_encrypt, decrypt_blob
 
 from .fixtures import record
 assert record

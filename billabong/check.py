@@ -1,5 +1,5 @@
 """
-Check the integrity of Diss data
+Check the integrity of the data.
 """
 
 import logging

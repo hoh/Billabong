@@ -1,7 +1,7 @@
 
 import json
 from datetime import datetime
-from diss.utils import json_handler
+from billabong.utils import json_handler
 
 
 def test_encode_datetime():

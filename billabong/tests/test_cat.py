@@ -1,5 +1,5 @@
 
-from diss import get_content
+from billabong import get_content
 
 from .fixtures import record
 assert record

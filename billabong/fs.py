@@ -6,8 +6,8 @@ import errno
 
 from fuse import FUSE, FuseOSError, Operations
 
-from diss import get_content
-from diss.settings import inventory
+from billabong import get_content
+from billabong.settings import inventory
 
 
 def id_from_path(path):
@@ -26,7 +26,7 @@ def id_from_path(path):
         raise FuseOSError(errno.ENOENT)
 
 
-class DissFilesystem(Operations):
+class BillabongFilesystem(Operations):
 
     def __init__(self):
         pass
@@ -88,4 +88,4 @@ class DissFilesystem(Operations):
                 raise FuseOSError(errno.ENOENT)
 
 if __name__ == '__main__':
-    FUSE(DissFilesystem(), './mount_dissfs', foreground=True)
+    FUSE(BillabongFilesystem(), './mount', foreground=True)

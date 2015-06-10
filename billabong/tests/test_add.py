@@ -2,10 +2,10 @@
 import pytest
 
 import json
-from diss import add_file
-from diss.utils import json_handler
+from billabong import add_file
+from billabong.utils import json_handler
 
-from diss.settings import inventory, storage
+from billabong.settings import inventory, storage
 
 
 HASH = "fc7d4f43945d94c874415e3bd9a6e181f8c84f8a36f586389405e391c01e48b2"

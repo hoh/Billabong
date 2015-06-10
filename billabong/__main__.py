@@ -1,4 +1,8 @@
-"""Diss: Distributed Storage System
+"""
+# Billabong
+
+A reliable, distributed, encrypted storage and backup solution for all of
+your photos, videos, music and other static data.
 """
 
 import os
@@ -13,10 +17,10 @@ except ImportError:
     highlight = None
 
 from diss import add_file, get_content
-from diss.settings import inventory
-from diss.check import check_data, check_enc_data
-from diss.utils import dumps
-from diss.sync import push_blobs, pull_blobs
+from billabong.settings import inventory
+from billabong.check import check_data, check_enc_data
+from billabong.utils import dumps
+from billabong.sync import push_blobs, pull_blobs
 
 
 def print_record(record):

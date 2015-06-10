@@ -1,5 +1,5 @@
 
-from diss.settings import inventory
+from billabong.settings import inventory
 
 from .fixtures import record
 assert record

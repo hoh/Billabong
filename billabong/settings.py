@@ -10,7 +10,7 @@ def load_settings(path):
 
 TMPSTORAGE_PATH = './tmpdata'
 
-settings = load_settings('diss/settings.json')
+settings = load_settings('billabong/settings.json')
 
 inventory = load_inventory(settings['inventory'])
 storage = load_storage(settings['storage'])

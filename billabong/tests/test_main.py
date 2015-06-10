@@ -6,8 +6,7 @@ assert record
 
 
 def run(cmd):
-    print('python -m diss ' + cmd)
-    os.system('python -m diss ' + cmd)
+    os.system('python -m billabong ' + cmd)
 
 
 def test_cli(record):

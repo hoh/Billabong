@@ -1,7 +1,7 @@
 
 import pytest
-from diss import add_file
-from diss.settings import inventory, storage
+from billabong import add_file
+from billabong.settings import inventory, storage
 
 
 @pytest.fixture
