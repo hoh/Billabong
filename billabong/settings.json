@@ -1,0 +1,14 @@
+{
+    "inventory": {
+        "type": "FolderInventory",
+        "args": {"path": "./meta"}
+    },
+    "storage": {
+        "type": "FolderStorage",
+        "args": {"path": "./data"}
+    },
+    "storages": [
+        {"type": "FolderStorage", "args": {"path": "./remote"}
+     }
+    ]
+}
