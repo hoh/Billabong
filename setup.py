@@ -19,10 +19,9 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 from setuptools import setup
-from billabong import __version__
 
 setup(name='Billabong',
-      version=__version__,
+      version='0.1',
       description='Personal Encrypted file storage, backup and sharing',
       author='Hugo Herter',
       author_email='@hugoherter.com',
