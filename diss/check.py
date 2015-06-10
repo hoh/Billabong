@@ -30,7 +30,7 @@ def check_data(id=None, meta=None, raises=False):
     else:
         raise ValueError("Missing value for 'id' or 'meta'.")
 
-    blob_id = meta['blobs'][0]
+    blob_id = meta['blob']
     check_enc_data(blob_id)
 
     key = b64decode(meta['key'])

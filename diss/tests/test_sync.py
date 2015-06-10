@@ -15,7 +15,7 @@ def test_push_blobs():
 
 
 def test_push_blob(record):
-    ID = record['blobs'][0]
+    ID = record['blob']
     remote.delete_everything(confirm=True)
     push_blob(ID, storage, remote)
     remote.delete_everything(confirm=True)

@@ -30,7 +30,7 @@ def add_file(filepath, *, key=None):
     meta = {
         'key': b64encode(key),
         'hash': 'sha256-' + file_hash.hexdigest(),
-        'blobs': [blob_hash],
+        'blob': blob_hash,
         'size': os.path.getsize(realpath),
         'timestamp': datetime.now(),
         'id': uuid4().hex,
@@ -51,5 +51,5 @@ def add_file(filepath, *, key=None):
 def get_content(id_, *, offset=0, length=None):
     record = inventory.get_record(id_)
     key = b64decode(record['key'])
-    blob_id = record['blobs'][0]
+    blob_id = record['blob']
     return decrypt_blob(blob_id, key, offset=offset, length=length)

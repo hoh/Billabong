@@ -13,11 +13,11 @@ def test_random_key():
 
 def test_copy_and_encrypt(record):
     blob_id_ = copy_and_encrypt('hello.txt', key=b'0'*32)
-    assert blob_id_ == record['blobs'][0]
+    assert blob_id_ == record['blob']
 
 
 def test_decrypt_blob(record):
-    blob_id = record['blobs'][0]
+    blob_id = record['blob']
     g = decrypt_blob(blob_id, b'0'*32)
     data = b''.join(g)
     assert data == b'Hello world !\n\n'

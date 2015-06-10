@@ -11,4 +11,4 @@ def test_list_blobs():
     assert len(blobs) > 1
 
     inventory.delete(meta['id'])
-    storage.delete(meta['blobs'][0])
+    storage.delete(meta['blob'])
