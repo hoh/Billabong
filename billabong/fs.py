@@ -25,7 +25,7 @@ import errno
 from fuse import FUSE, FuseOSError, Operations
 
 from billabong import get_content
-from billabong.settings import inventory
+from billabong.settings import inventory, settings
 
 
 def id_from_path(path):
@@ -106,4 +106,4 @@ class BillabongFilesystem(Operations):
                 raise FuseOSError(errno.ENOENT)
 
 if __name__ == '__main__':
-    FUSE(BillabongFilesystem(), './mount', foreground=True)
+    FUSE(BillabongFilesystem(), settings['mount'], foreground=True)

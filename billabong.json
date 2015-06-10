@@ -8,8 +8,8 @@
         "args": {"path": "data/storage"}
     },
     "storages": [
-        {"type": "FolderStorage", "args": {"path": "data/remote"}
-     }
+        {"type": "FolderStorage", "args": {"path": "data/remote"}}
     ],
-    "tmp_directory": "/tmp"
+    "tmp_directory": "/tmp",
+    "mount": "./mount"
 }
