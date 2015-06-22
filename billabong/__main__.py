@@ -143,5 +143,11 @@ def mount(path=None, foreground=False):
     mount_fuse(path, foreground)
 
 
+@command
+def version():
+    from billabong import __version__
+    print(__version__)
+
+
 if __name__ == '__main__':
     run()
