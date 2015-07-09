@@ -21,7 +21,10 @@
 
 import os
 from shutil import copyfileobj
-from .utils import read_in_chunks
+from billabong.utils import read_in_chunks
+
+from urllib.parse import urlparse
+import http.client
 
 
 class Storage:
@@ -106,9 +109,45 @@ class FolderStorage(Storage):
         other_storage.import_blob(id_, blobfile)
 
 
+class HTTPStorage(Storage):
+    """Blob storage on a remote read-only HTTP(S) host
+    """
+
+    def __init__(self, url):
+        self.url = url
+
+    def read_in_chunks(self, id_, offset=0, chunk_size=1024):
+        "Read a blob file from HTTP chunk by chunk"
+        print('read http chunk {} {}'.format(id_, offset))
+
+        u = urlparse(self.url)
+        conn = http.client.HTTPConnection(host=u.hostname,
+                                          port=u.port)
+        conn.request('GET', os.path.join(u.path, id_),
+                     headers={'Range': 'bytes={}-'.format(offset)})
+        resp = conn.getresponse()
+
+        if resp.status == 206:
+            # 206 = Partial Content
+            i = 0
+            chunk = resp.read(chunk_size)
+            while chunk:
+                yield i, chunk
+                chunk = resp.read(chunk_size)
+                i += 1
+
+        elif resp.status == 404:
+            raise ValueError("404 not found")
+        else:
+            raise NotImplementedError("Range unsupported, status {}"
+                                      .format(resp.status))
+
+
 def load_storage(settings):
     type_ = settings['type']
     args = settings.get('args', {})
 
     if type_ == 'FolderStorage':
         return FolderStorage(**args)
+    elif type_ == 'HTTPStorage':
+        return HTTPStorage(**args)

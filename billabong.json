@@ -7,6 +7,10 @@
         "type": "FolderStorage",
         "args": {"path": "data/storage"}
     },
+    "storage-disabled": {
+        "type": "HTTPStorage",
+        "args": {"url": "http://okso.be/F/blobs"}
+    },
     "storages": [
         {"type": "FolderStorage", "args": {"path": "data/remote"}}
     ],
