@@ -16,17 +16,19 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-"""Blob Storage
-"""
+"""Blob Storage."""
 
 from .abstract import Storage
 from .folder import FolderStorage
 from .http import HTTPStorage
 
 assert Storage
+assert FolderStorage
+assert HTTPStorage
 
 
 def load_storage(settings):
+    """Instanciate a storage instance from settings."""
     type_ = settings['type']
     args = settings.get('args', {})
 

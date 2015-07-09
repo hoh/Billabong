@@ -15,41 +15,48 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""Abstract interface for storage implemenations."""
+
 
 class Storage:
-    """A Blob Storage represents a location where encrypted blobs can be stored
+
+    """Storage interface to implement.
+
+    A Blob Storage represents a location where encrypted blobs can be stored
     and synced from/to.
     """
 
     def list_blob_ids(self):
+        """Get the ids of all blobs in the storage."""
         raise NotImplementedError
 
     def delete(self, id_):
+        """Delete a given blob in the storage."""
         raise NotImplementedError
 
     def delete_everything(self, *, confirm=False):
-        "Delete every blob from the storage"
+        """Delete every blob from the storage."""
         for blob_id in self.list_blob_ids():
             self.delete(blob_id)
 
     def import_blob(self, id_, filename):
-        "Add an encrypted blob file to the storage"
+        """Add an encrypted blob file to the storage."""
         raise NotImplementedError
 
     def read_in_chunks(self, id_, chunk_size=1024):
-        "Read a blob chunk by chunk"
+        """Read a blob chunk by chunk."""
         raise NotImplementedError
 
     def missing_from(self, other_storage):
-        "Return the ids present locally but not on the other storage."
+        """Get the ids present locally but not on an other storage."""
         blobs_self = set(self.list_blob_ids())
         blobs_other = set(other_storage.list_blob_ids())
         return blobs_self - blobs_other
 
     def push_to(self, other_storage):
-        "Push local blobs to another storage"
+        """Push local blobs to another storage."""
         raise NotImplementedError
 
     def push_blob_to(self, id_, other_storage):
-        "Push a local blob to another storage."
+        """Push a local blob to another storage."""
         raise NotImplementedError

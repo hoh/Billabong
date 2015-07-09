@@ -15,6 +15,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""Storage implementation based on the HTTP protocol."""
+
+
 import os.path
 import http.client
 from urllib.parse import urlparse
@@ -23,14 +26,15 @@ from .abstract import Storage
 
 
 class HTTPStorage(Storage):
-    """Blob storage on a remote read-only HTTP(S) host
-    """
+
+    """Blob storage on a remote read-only HTTP(S) host."""
 
     def __init__(self, url):
+        """Initialize an HTTP storage based on the given root url."""
         self.url = url
 
     def read_in_chunks(self, id_, offset=0, chunk_size=1024):
-        "Read a blob file from HTTP chunk by chunk"
+        """Read a blob file from HTTP chunk by chunk."""
         print('read http chunk {} {}'.format(id_, offset))
 
         u = urlparse(self.url)
