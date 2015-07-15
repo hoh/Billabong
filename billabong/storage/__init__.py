@@ -21,10 +21,12 @@
 from .abstract import Storage
 from .folder import FolderStorage
 from .http import HTTPStorage
+from .ssh import SSHStorage
 
 assert Storage
 assert FolderStorage
 assert HTTPStorage
+assert SSHStorage
 
 
 def load_storage(settings):
@@ -36,3 +38,7 @@ def load_storage(settings):
         return FolderStorage(**args)
     elif type_ == 'HTTPStorage':
         return HTTPStorage(**args)
+    elif type_ == 'SSHStorage':
+        return SSHStorage(**args)
+    else:
+        raise ValueError("Unknown type", type_)

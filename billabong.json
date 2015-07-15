@@ -11,6 +11,14 @@
         "type": "HTTPStorage",
         "args": {"url": "http://okso.be/F/blobs"}
     },
+    "storage-disabled": {
+        "type": "SSHStorage",
+        "args": {
+            "host": "s.okso.me",
+            "port": 10022,
+            "path": "/tmp/foo"
+        }
+    },
     "storages": [
         {"type": "FolderStorage", "args": {"path": "data/remote"}}
     ],

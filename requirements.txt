@@ -9,3 +9,6 @@ python-magic
 
 fusepy
 baker
+
+# Storage backends
+paramiko
