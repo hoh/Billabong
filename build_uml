@@ -1,0 +1,2 @@
+#!/bin/bash
+pyreverse -o png -A -S -p billabong /home/okso/Documents/Projects/Billabong/billabong
