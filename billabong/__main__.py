@@ -81,13 +81,7 @@ def get(id_):
 def info(*ids):
     for id_ in ids:
         meta = inventory.get_record(id_)
-
-        if highlight and '--no-color' not in sys.argv:
-            print(highlight(dumps(meta),
-                            JsonLexer(),
-                            TerminalFormatter()))
-        else:
-            print(dumps(meta))
+        print_record(meta)
 
 
 @command
