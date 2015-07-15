@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-
+import pytest
 from billabong.check import check_data
 
 from .fixtures import record
@@ -25,3 +25,7 @@ assert record
 def test_check_data(record):
     ID = record['id']
     check_data(id=ID)
+    check_data(meta=record)
+
+    with pytest.raises(ValueError):
+        check_data()

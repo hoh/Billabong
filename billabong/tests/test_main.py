@@ -37,3 +37,5 @@ def test_cli(record):
     run('push')
     run('pull')
     run('echo ' + ID)
+    run('status')
+    run('version')
