@@ -21,13 +21,13 @@
 from setuptools import setup
 
 setup(name='Billabong',
-      version='0.1.4',
+      version='0.1.5',
       description='Personal Encrypted file storage, backup and sharing',
       long_description=open('README.rst').read(),
       author='Hugo Herter',
       author_email='@hugoherter.com',
       url='https://github.com/hoh/Billabong/',
-      packages=['billabong'],
+      packages=['billabong', 'billabong.storage'],
       install_requires=['pycrypto', 'python-magic', 'baker'],
       license='AGPLv3',
       keywords="encrypted storage backup distributed",
