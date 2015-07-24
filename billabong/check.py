@@ -75,7 +75,7 @@ def check_enc_data(blob_id, raises=False):
 def check_clear_data(id, key, hash):
     "Check the validity of the clear data inside a blob"
 
-    clear_data = decrypt_blob(id, key)
+    clear_data = decrypt_blob(storage, id, key)
 
     clear_hash = hashing()
     for chunk in clear_data:

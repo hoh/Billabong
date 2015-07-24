@@ -24,7 +24,7 @@ import errno
 
 from fuse import FUSE, FuseOSError, Operations
 
-from billabong import get_content
+from billabong import billabong
 from billabong.settings import inventory, settings
 
 
@@ -96,12 +96,13 @@ class BillabongFilesystem(Operations):
         if path.startswith('/blobs/'):
             id_ = id_from_path(path)
             print(path, length, offset, fh)
-            data = get_content(id_, offset=offset, length=length)
+            data = billabong.read(id_, offset=offset, length=length)
             return b''.join(data)
         elif path.startswith('/files/'):
             id_ = id_from_path(path)
             if id_:
-                return b''.join(get_content(id_, offset=offset, length=length))
+                return b''.join(
+                    billabong.read(id_, offset=offset, length=length))
             else:
                 raise FuseOSError(errno.ENOENT)
 

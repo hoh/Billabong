@@ -23,7 +23,7 @@ from Crypto import Random
 from Crypto.Cipher import AES
 from Crypto.Util import Counter
 
-from .settings import (storage, TMPSTORAGE_PATH)
+from .settings import TMPSTORAGE_PATH
 from .utils import read_in_chunks
 
 hashing = hashlib.sha256
@@ -36,7 +36,7 @@ def random_key():
     return key
 
 
-def copy_and_encrypt(filepath, key):
+def copy_and_encrypt(storage, filepath, key):
     "Encrypt the file into the data store, and returns its id."
 
     tmp_name = 'billabong-{}.part'.format(uuid.uuid4())
@@ -73,7 +73,7 @@ def counter_for_offset(offset):
     return Counter.new(128, initial_value=initial_value)
 
 
-def decrypt_blob(blob_id, key, offset=0, length=None):
+def decrypt_blob(storage, blob_id, key, offset=0, length=None):
     "Decrypt the content of a blob through a generator."
 
     modulo = offset % 16

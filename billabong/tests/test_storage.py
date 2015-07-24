@@ -16,12 +16,12 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from billabong import add_file
+from billabong import billabong
 from billabong.settings import inventory, storage
 
 
 def test_list_blobs():
-    meta = add_file('hello.txt', key=b'0'*32)
+    meta = billabong.add_file('hello.txt', key=b'0'*32)
     assert meta
     blobs = list(storage.list_blob_ids())
     assert blobs

@@ -34,7 +34,7 @@ try:
 except ImportError:
     highlight = None
 
-from billabong import add_file, get_content
+from billabong import billabong
 from billabong.settings import inventory
 from billabong.check import check_data, check_enc_data
 from billabong.utils import dumps
@@ -68,7 +68,7 @@ def blobs():
 @command
 def add(*targets):
     for target in targets:
-        record = add_file(target)
+        record = billabong.add_file(target)
         print_record(record)
 
 
@@ -86,7 +86,7 @@ def info(*ids):
 
 @command
 def echo(id_):
-    data = get_content(id_)
+    data = billabong.read(id_)
 
     # Write bytes to stdout:
     fp = os.fdopen(sys.stdout.fileno(), 'wb')

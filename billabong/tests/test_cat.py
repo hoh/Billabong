@@ -16,7 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from billabong import get_content
+from billabong import billabong
 
 from .fixtures import record
 assert record
@@ -25,5 +25,5 @@ assert record
 def test_get_content(record):
     ID = record['id']
 
-    content = b"".join(get_content(ID))
+    content = b"".join(billabong.read(ID))
     assert content == b"Hello world !\n\n"

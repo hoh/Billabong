@@ -17,13 +17,13 @@
 
 
 import pytest
-from billabong import add_file
+from billabong import billabong
 from billabong.settings import inventory, storage
 
 
 @pytest.fixture
 def record(request):
-    record = add_file('hello.txt', key=b'0'*32)
+    record = billabong.add_file('hello.txt', key=b'0'*32)
 
     def fin():
         inventory.delete(record['id'])
