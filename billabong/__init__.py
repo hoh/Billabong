@@ -27,7 +27,7 @@ from .encryption import random_key, copy_and_encrypt, decrypt_blob
 from .check import compute_hash
 
 __author__ = "Hugo Herter http://hugoherter.com"
-__version__ = "0.1.5"
+__version__ = "0.2.0"
 
 
 def add_file(filepath, *, key=None):
