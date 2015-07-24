@@ -1,5 +1,5 @@
 #!/bin/bash
 
 export PYTHONPATH=$(pwd):$PYTHONPATH
-py.test --pep8 --flakes billabong
+py.test --pep8 --flakes billabong $@
 
