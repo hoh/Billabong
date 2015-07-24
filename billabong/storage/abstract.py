@@ -30,6 +30,10 @@ class Storage:
         """Get the ids of all blobs in the storage."""
         raise NotImplementedError
 
+    def contains(self, id_):
+        """Return if the given blob id is present in the storage."""
+        return id_ in self.list_blob_ids()
+
     def delete(self, id_):
         """Delete a given blob in the storage."""
         raise NotImplementedError
