@@ -34,7 +34,19 @@ def dumps(obj, indent=2):
     return json.dumps(obj, default=json_handler, indent=indent)
 
 
-loads = json.loads
+def json_loader(dico):
+    for key, value in dico.items():
+        if key == 'timestamp' and isinstance(value, str):
+            try:
+                dico[key] = datetime.datetime.strptime(value,
+                                                       "%Y-%m-%dT%H:%M:%S.%f")
+            except ValueError as error:
+                print("WARNING: ", error)
+    return dico
+
+
+def loads(string):
+    return json.loads(string, object_hook=json_loader)
 
 
 def read_in_chunks(file_object, chunk_size=1024):
