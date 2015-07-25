@@ -27,3 +27,5 @@ Available commands:
 
 Use 'bong <command> --help' for individual command help.
 ```
+
+![TravisCI build Status](https://api.travis-ci.org/hoh/Billabong.svg)
