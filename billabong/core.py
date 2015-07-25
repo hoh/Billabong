@@ -83,7 +83,7 @@ class Billabong:
         for store in self.stores:
             try:
                 store.delete(blob_id)
-            except NotImplementedError:
+            except (NotImplementedError, FileNotFoundError):
                 pass
         self.inventory.delete(id_)
 
