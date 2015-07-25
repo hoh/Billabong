@@ -35,7 +35,7 @@ except ImportError:
     highlight = None
 
 from billabong import billabong
-from billabong.settings import inventory
+from billabong.settings import inventory, stores
 from billabong.check import check_data, check_enc_data
 from billabong.utils import dumps
 from billabong.sync import push_blobs, pull_blobs
@@ -60,8 +60,16 @@ def ls():
 
 
 @command
-def blobs():
+def records():
+    """List all records ids from the inventory."""
     for i in inventory.list_record_ids():
+        print(i)
+
+
+@command
+def blobs():
+    """List all blob ids from the first storage."""
+    for i in stores[0].list_blob_ids():
         print(i)
 
 
