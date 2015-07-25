@@ -75,14 +75,10 @@ def blobs():
 
 @command
 def add(*targets):
+    """Import one or several files and print resulting records."""
     for target in targets:
         record = billabong.add_file(target)
         print_record(record)
-
-
-@command
-def get(id_):
-    raise NotImplemented
 
 
 @command
