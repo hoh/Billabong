@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""Test cleartext access."""
 
 from billabong import billabong
 
@@ -23,6 +24,7 @@ assert record
 
 
 def test_get_content(record):
+    """Test getting cleartext content from a record."""
     ID = record['id']
 
     content = b"".join(billabong.read(ID))

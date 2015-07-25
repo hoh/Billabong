@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""Tests JSON handling of datetime objects."""
 
 import json
 from datetime import datetime
@@ -22,12 +23,14 @@ from billabong.utils import json_handler
 
 
 def test_encode_datetime():
+    """Test dumping of datetime object in JSON."""
     dico = {'date': datetime(2015, 4, 8)}
     assert json.dumps(dico, default=json_handler) \
         == '{"date": "2015-04-08T00:00:00"}'
 
 
 def test_encode_datetime_subdico():
+    """Test dumping of datetime object in a sub-dictionnary in JSON."""
     dico = {'date': {'good': True, 'time': datetime(2015, 4, 8)}}
     encoded = json.dumps(dico, default=json_handler)
     assert '"time": "2015-04-08T00:00:00"' in encoded

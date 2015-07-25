@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""Test HTTP storage implementation."""
 
 import pytest
 from billabong.storage.http import HTTPStorage
@@ -22,10 +23,12 @@ from billabong.storage.http import HTTPStorage
 
 @pytest.fixture
 def storage():
+    """Fixture that creates a folder storage instance."""
     url = 'http://localhost:5080/'
     return HTTPStorage(url)
 
 
 def test__init(storage):
+    """Test the storage has been initialized correctly."""
     assert storage
     assert storage.url

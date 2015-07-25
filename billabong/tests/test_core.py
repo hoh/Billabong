@@ -23,6 +23,7 @@ assert record
 
 
 def test_get(record):
+    """Test getting a record from an id on Billabong object."""
     id_ = record['id']
     record_obtained = billabong.get(id_)
     for key in record.keys():
@@ -30,6 +31,7 @@ def test_get(record):
 
 
 def test_read(record):
+    """Test getting cleartext data from an id on Billabong object."""
     id_ = record['id']
     reader = billabong.read(id_)
     data = b''.join(reader)

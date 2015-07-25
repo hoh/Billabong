@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""Fixtures used in tests."""
 
 import pytest
 from billabong import billabong
@@ -23,6 +24,7 @@ from billabong.settings import inventory, stores
 
 @pytest.fixture
 def record(request):
+    """Import a file, return the record and delete them after the test."""
     record = billabong.add_file('hello.txt', key=b'0'*32)
 
     def fin():

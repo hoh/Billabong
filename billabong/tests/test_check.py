@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""Test validation of data integrity."""
+
 import pytest
 from billabong.check import check_data
 
@@ -23,9 +25,10 @@ assert record
 
 
 def test_check_data(record):
+    """Test validation of data integrity using 'check_data'."""
     ID = record['id']
-    check_data(id=ID)
-    check_data(meta=record)
+    check_data(id_=ID)
+    check_data(record=record)
 
     with pytest.raises(ValueError):
         check_data()

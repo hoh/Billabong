@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""Test file synchronization."""
 
 from billabong.settings import stores
 from billabong.sync import push_blobs
@@ -27,6 +28,7 @@ remote = stores[1]
 
 
 def test_push_blobs():
-    remote.delete_everything(confirm=True)
+    """Test pushing blobs to one remote."""
+    remote.delete_everything()
     push_blobs()
-    remote.delete_everything(confirm=True)
+    remote.delete_everything()

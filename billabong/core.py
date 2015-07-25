@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""High-level interface above inventory and stores."""
+
 import os.path
 from uuid import uuid4
 from base64 import b64encode, b64decode
@@ -95,5 +97,4 @@ class Billabong:
             if store.contains(blob_id):
                 return decrypt_blob(store, blob_id, key,
                                     offset=offset, length=length)
-        else:
-            raise FileNotFoundError
+        raise FileNotFoundError

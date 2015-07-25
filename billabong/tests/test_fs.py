@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""Tests Fuse filesystem."""
 
 import pytest
 
@@ -28,10 +29,12 @@ assert record
 
 @pytest.fixture
 def fs():
+    """Fixture that creates a Fuse filesystem instance."""
     return BillabongFilesystem()
 
 
 def test_id_from_path(record):
+    """Test path resolver."""
     ID = record['id']
     assert id_from_path('/blobs/SOMEID') == 'SOMEID'
     assert id_from_path('/files/hello.txt') == ID
@@ -44,14 +47,16 @@ def test_id_from_path(record):
 
 
 def test_readdir(record, fs):
+    """Test directory listing."""
     ID = record['id']
     assert fs.readdir('/', None) == ['blobs', 'files']
     assert set(fs.readdir('/blobs', None)).issuperset([ID])
     assert set(fs.readdir('/files', None)).issuperset(['hello.txt'])
-    assert fs.readdir('/does_not_exist', None) == None
+    assert fs.readdir('/does_not_exist', None) is None
 
 
 def test_read(record, fs):
+    """Test file reading."""
     ID = record['id']
     data = fs.read('/blobs/' + ID, 100, 0, None)
     assert data == b"Hello world !\n\n"
@@ -64,5 +69,6 @@ def test_read(record, fs):
 
 
 def test_getattr(record, fs):
+    """Test getting file or directory attributes."""
     assert fs.getattr('/').get('st_size')
     assert fs.getattr('/files/hello.txt').get('st_size')

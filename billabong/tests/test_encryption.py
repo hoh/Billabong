@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""Tests encryption functions."""
 
 from billabong.settings import stores
 from billabong.encryption import random_key, copy_and_encrypt, decrypt_blob
@@ -26,17 +27,20 @@ store = stores[0]
 
 
 def test_random_key():
+    """Test generating a random key."""
     key = random_key()
     assert len(key) == 32
     assert type(key) is bytes
 
 
 def test_copy_and_encrypt(record):
+    """Test file encryption."""
     blob_id_ = copy_and_encrypt(store, 'hello.txt', key=b'0'*32)
     assert blob_id_ == record['blob']
 
 
 def test_decrypt_blob(record):
+    """Test file decryption."""
     blob_id = record['blob']
     g = decrypt_blob(store, blob_id, b'0'*32)
     data = b''.join(g)
@@ -44,6 +48,7 @@ def test_decrypt_blob(record):
 
 
 def test_decrypt_offset():
+    """Test partial file decryption."""
     offset = 340
     length = 69
     expected = open('lorem.txt', 'rb').read()[offset:offset+length]

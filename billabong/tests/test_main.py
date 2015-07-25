@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""Test CLI interface."""
 
 import os
 
@@ -23,10 +24,12 @@ assert record
 
 
 def run(cmd):
+    """Helper to test running a CLI command."""
     os.system('python -m billabong ' + cmd)
 
 
 def test_cli(record):
+    """Test main supported CLI commands."""
     ID = record['id']
 
     run('ls')

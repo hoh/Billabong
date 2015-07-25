@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""Test folder storage implementation."""
 
 import os
 import pytest
@@ -23,6 +24,7 @@ from billabong.storage.folder import FolderStorage
 
 @pytest.fixture
 def storage():
+    """Fixture that creates a folder storage instance."""
     path = '/tmp/test_storage'
     if not os.path.isdir(path):
         os.mkdir(path)
@@ -30,10 +32,12 @@ def storage():
 
 
 def test__init(storage):
+    """Test the storage has been initialized correctly."""
     assert storage
     assert storage.path
 
 
 def test_blob_path(storage):
+    """Test internal blob_path method."""
     expected_path = storage.path + '/SOMEID'
     assert storage._blob_path(id_='SOMEID') == expected_path

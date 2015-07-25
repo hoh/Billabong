@@ -16,7 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 """
-# Billabong
+Billabong.
 
 A reliable, distributed, encrypted storage and backup solution for all of
 your photos, videos, music and other static data.

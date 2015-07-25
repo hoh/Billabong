@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""Test file import into Billabong."""
 
 import pytest
 
@@ -29,6 +30,7 @@ HASH = "fc7d4f43945d94c874415e3bd9a6e181f8c84f8a36f586389405e391c01e48b2"
 
 
 def test_add_file():
+    """Test adding a file with a defined key."""
     # Test using a know replicable :key:
     meta = billabong.add_file('hello.txt', key=b'0'*32)
     assert meta
@@ -44,6 +46,7 @@ def test_add_file():
 
 
 def test_add_random_key():
+    """Test adding a file with no defined key."""
     meta = billabong.add_file('lorem.txt')
     assert meta
     inventory.delete(meta['id'])
@@ -51,11 +54,13 @@ def test_add_random_key():
 
 
 def test_add_file_not_found():
+    """Test that adding a file that does not exist fails."""
     with pytest.raises(FileNotFoundError):
         billabong.add_file('does not exist.txt')
 
 
 def test_add_file_json():
+    """Test that the a record can is JSON serializable."""
     meta = billabong.add_file('hello.txt', key=b'0'*32)
     assert len(json.dumps(meta, default=json_handler)) > 1  # JSON serializable
     inventory.delete(meta['id'])

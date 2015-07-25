@@ -15,12 +15,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""Test abstract storage schema."""
+
 
 import pytest
 from billabong.storage.abstract import Storage
 
 
 def test_not_implemented():
+    """Test abstract methods of the storage."""
     s = Storage()
 
     with pytest.raises(NotImplementedError):
@@ -30,10 +33,10 @@ def test_not_implemented():
         s.delete(id_='SOMEID')
 
     with pytest.raises(NotImplementedError):
-        s.delete_everything(confirm=True)
+        s.delete_everything()
 
     with pytest.raises(NotImplementedError):
-        s.import_blob(id_='SOMEID', filename='/tmp/filename')
+        s.import_blob(id_='SOMEID', blobfile=object())
 
     with pytest.raises(NotImplementedError):
         s.read_in_chunks(id_='SOMEID', chunk_size=1024)

@@ -16,9 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-"""
-FUSE file system over the blob system.
-"""
+"""FUSE file system over the blob system."""
 
 import errno
 

@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+"""Test inventory methods."""
 
 from billabong.settings import inventory
 
@@ -23,22 +24,26 @@ assert record
 
 
 def test_list_records(record):
+    """Test listing record ids."""
     ID = record['id']
     ids = list(inventory.list_record_ids())
     assert set(ids).issuperset([ID])
 
 
 def test_list_paths(record):
+    """Test listing record paths."""
     paths = list(inventory.list_record_paths())
     assert set(paths).issuperset(['hello.txt'])
 
 
 def test_list_filenames(record):
+    """Test listing record filenames."""
     filenames = list(inventory.list_record_filenames())
     assert set(filenames).issuperset(['hello.txt'])
 
 
 def test_get_meta(record):
+    """Test getting a record from the inventory."""
     ID = record['id']
     meta = inventory.get_record(ID)
     expected = {
@@ -53,6 +58,7 @@ def test_get_meta(record):
 
 
 def test_search_meta(record):
+    """Test searching for data in the records."""
     ID = record['id']
     ids = list(inventory.search('hello'))
     assert set(ids).issuperset([ID])
@@ -62,6 +68,7 @@ def test_search_meta(record):
 
 
 def test_id_from_filename(record):
+    """Test getting a record id from its filename."""
     ID = record['id']
     id_ = inventory.id_from_filename('hello.txt')
     assert id_ == ID
@@ -71,9 +78,11 @@ def test_id_from_filename(record):
 
 
 def test_delete_everything():
-    inventory.delete_everything(confirm=True)
+    """Test deleting every record in the inventory."""
+    inventory.delete_everything()
 
 
 def test_search_id(record):
+    """Test searching records based on their id prefix."""
     ID = record['id']
     inventory.search_id(ID[:10])

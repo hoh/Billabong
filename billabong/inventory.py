@@ -49,7 +49,7 @@ class Inventory:
         for id_ in self.list_record_ids():
             yield self.get_record(id_)
 
-    def delete_everything(self, *, confirm=False):
+    def delete_everything(self):
         """Delete every record from the inventory."""
         for record_id in self.list_record_ids():
             self.delete(record_id)

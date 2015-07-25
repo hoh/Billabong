@@ -17,7 +17,7 @@
 
 
 """
-# Billabong
+Billabong.
 
 A reliable, distributed, encrypted storage and backup solution for all of
 your photos, videos, music and other static data.
@@ -55,10 +55,10 @@ def print_record(record):
 def ls():
     """List short records ids with filename from the inventory."""
     format_ = "{:>8} {:>8} {:>8}"
-    for r in inventory.list_records():
-        print(format_.format(r['id'][:8],
-                             r['size'],
-                             r['info']['filename']))
+    for record in inventory.list_records():
+        print(format_.format(record['id'][:8],
+                             record['size'],
+                             record['info']['filename']))
 
 
 @command
@@ -85,7 +85,7 @@ def add(*targets):
 
 @command
 def info(*ids):
-    """Print record content from one or several record ids"""
+    """Print record content from one or several record ids."""
     for id_ in ids:
         meta = inventory.get_record(id_)
         print_record(meta)
@@ -97,10 +97,10 @@ def echo(id_):
     data = billabong.read(id_)
 
     # Write bytes to stdout:
-    fp = os.fdopen(sys.stdout.fileno(), 'wb')
+    fdesc = os.fdopen(sys.stdout.fileno(), 'wb')
     for chunk in data:
-        fp.write(chunk)
-        fp.flush()
+        fdesc.write(chunk)
+        fdesc.flush()
 
 
 @command
@@ -134,10 +134,10 @@ def pull():
 def status():
     """Print a global status of the inventory and storage."""
     print("Inventory:")
-    print("  {:>4} records".format(
-          len(list(inventory.list_record_ids()))))
-    print("  {:>4} bytes total".format(
-          sum(i['size'] for i in inventory.list_records())))
+    print("  {:>4} records"
+          .format(len(list(inventory.list_record_ids()))))
+    print("  {:>4} bytes total"
+          .format(sum(i['size'] for i in inventory.list_records())))
 
 
 @command

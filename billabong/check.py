@@ -16,9 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-"""
-Check the integrity of the data.
-"""
+"""Check the integrity of the data."""
 
 import logging
 from base64 import b64decode
@@ -41,21 +39,21 @@ def compute_hash(file_object, chunk_size=1024):
     return file_hash
 
 
-def check_data(id=None, meta=None, raises=False):
+def check_data(id_=None, record=None, raises=False):
     """Check the integrity of the data for a record id or record."""
-    if id and not meta:
-        meta = inventory.get_record(id)
-    elif meta and not id:
-        id = meta['id']
+    if id_ and not record:
+        record = inventory.get_record(id_)
+    elif record and not id_:
+        id_ = record['id']
     else:
         raise ValueError("Missing value for 'id' or 'meta'.")
 
-    blob_id = meta['blob']
-    check_enc_data(blob_id)
+    blob_id = record['blob']
+    check_enc_data(blob_id, raises)
 
-    key = b64decode(meta['key'])
-    hash = meta['hash']
-    check_clear_data(blob_id, key, hash)
+    key = b64decode(record['key'])
+    hash_ = record['hash']
+    check_clear_data(blob_id, key, hash_)
 
 
 def check_enc_data(blob_id, raises=False):
@@ -64,7 +62,7 @@ def check_enc_data(blob_id, raises=False):
     with open(enc_path, 'rb') as enc_file:
         enc_hash = compute_hash(enc_file)
 
-    if id != enc_hash.hexdigest():
+    if blob_id != enc_hash.hexdigest():
         if raises:
             raise CheckError(
                 "Data does not match the hash for id '{}'".format(id))
@@ -73,13 +71,13 @@ def check_enc_data(blob_id, raises=False):
                 "Data does not match the hash for id '{}'".format(id))
 
 
-def check_clear_data(id, key, hash):
+def check_clear_data(id_, key, hash_):
     """Check the validity of the clear data inside a blob."""
-    clear_data = decrypt_blob(stores[0], id, key)
+    clear_data = decrypt_blob(stores[0], id_, key)
 
     clear_hash = hashing()
     for chunk in clear_data:
         clear_hash.update(chunk)
 
-    if hash != "sha256-" + clear_hash.hexdigest():
+    if hash_ != "sha256-" + clear_hash.hexdigest():
         raise CheckError()
