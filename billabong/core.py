@@ -31,6 +31,7 @@ class Billabong:
     """High-level interface above inventory and stores."""
 
     def __init__(self, inventory, stores):
+        """Initialize a Billabong object with given inventory and stores."""
         self.inventory = inventory
         self.stores = stores
 

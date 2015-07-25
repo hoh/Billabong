@@ -29,7 +29,7 @@ from billabong.settings import inventory, settings
 
 
 def id_from_path(path):
-    "Get the blob id from a FUSE path"
+    """Get the blob id from a FUSE path."""
     if path.startswith('/blobs/'):
         id_ = path[len('/blobs/'):]
     elif path.startswith('/files/'):
@@ -46,12 +46,12 @@ def id_from_path(path):
 
 class BillabongFilesystem(Operations):
 
-    def __init__(self):
-        pass
+    """Fuse file system on top of Billabong."""
 
     # ----- File methods -----
 
     def getattr(self, path, fh=None):
+        """Hardcoded implementation of getattr."""
         if path in ('/', '/blobs', '/files'):
             return dict(
                 st_mode=16877,
@@ -83,6 +83,7 @@ class BillabongFilesystem(Operations):
             )
 
     def readdir(self, path, fh):
+        """List directory content."""
         if path == '/':
             return ['blobs', 'files']
         elif path == '/blobs':
@@ -93,6 +94,7 @@ class BillabongFilesystem(Operations):
             print('Unknown path', path)
 
     def read(self, path, length, offset, fh):
+        """Read file data."""
         if path.startswith('/blobs/'):
             id_ = id_from_path(path)
             print(path, length, offset, fh)
@@ -108,6 +110,7 @@ class BillabongFilesystem(Operations):
 
 
 def mount_fuse(path=None, foreground=True):
+    """Mount the Billabong file system."""
     if path is None:
         path = settings['mount']
 

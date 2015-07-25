@@ -16,11 +16,11 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from shutil import copy2
 from .settings import stores
 
 
 def push_blobs():
+    """Try to copy all local blobs to other stores."""
     for store in stores[1:]:
         try:
             stores[0].push_to(store)
@@ -29,6 +29,7 @@ def push_blobs():
 
 
 def pull_blobs():
+    """Try to copy all blobs from remote stores locally."""
     for store in stores[1:]:
         try:
             store.push_to(stores[0])

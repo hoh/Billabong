@@ -30,15 +30,14 @@ hashing = hashlib.sha256
 
 
 def random_key():
-    "Return a randomly generated AES key"
+    """Return a randomly generated AES key."""
     random = Random.new()
     key = random.read(AES.key_size[2])  # 256 bits
     return key
 
 
 def copy_and_encrypt(storage, filepath, key):
-    "Encrypt the file into the data store, and returns its id."
-
+    """Encrypt the file into the data store, and returns its id."""
     tmp_name = 'billabong-{}.part'.format(uuid.uuid4())
     tmp_destination = os.path.join(TMPSTORAGE_PATH, tmp_name)
 
@@ -68,14 +67,13 @@ def copy_and_encrypt(storage, filepath, key):
 
 
 def counter_for_offset(offset):
-    "Return a Counter for the given offset."
+    """Return a Counter for the given offset."""
     initial_value = 1 + (offset // 16)
     return Counter.new(128, initial_value=initial_value)
 
 
 def decrypt_blob(storage, blob_id, key, offset=0, length=None):
-    "Decrypt the content of a blob through a generator."
-
+    """Decrypt the content of a blob through a generator."""
     modulo = offset % 16
     # Compute a file offset, might be lower than the real offset
     file_offset = offset - modulo if offset else 0

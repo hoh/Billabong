@@ -21,6 +21,7 @@ import json
 
 
 def json_handler(obj):
+    """Convert datetime objects to string when dumping JSON."""
     if isinstance(obj, datetime.datetime) or isinstance(obj, datetime.date):
         return obj.isoformat()
     elif isinstance(obj, bytes):
@@ -31,10 +32,12 @@ def json_handler(obj):
 
 
 def dumps(obj, indent=2):
+    """Dump an object to JSON while handling datetime objects conversion."""
     return json.dumps(obj, default=json_handler, indent=indent)
 
 
 def json_loader(dico):
+    """Convert strings to datetime objects when loading JSON."""
     for key, value in dico.items():
         if key == 'timestamp' and isinstance(value, str):
             try:
@@ -46,12 +49,15 @@ def json_loader(dico):
 
 
 def loads(string):
+    """Load JSON while handling datetime objects conversion."""
     return json.loads(string, object_hook=json_loader)
 
 
 def read_in_chunks(file_object, chunk_size=1024):
     """Lazy function (generator) to read a file piece by piece.
-    Default chunk size: 1k."""
+
+    Default chunk size: 1KiB (1024 bytes).
+    """
     while True:
         data = file_object.read(chunk_size)
         if not data:
