@@ -32,3 +32,9 @@ def test_check_data(record):
 
     with pytest.raises(ValueError):
         check_data()
+
+
+def check_enc_data(record):
+    """Test validation of encrypted data checksums."""
+    blob_id = record['blob']
+    check_enc_data(blob_id)
