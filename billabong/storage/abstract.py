@@ -38,16 +38,16 @@ class Storage:
         """Delete a given blob in the storage."""
         raise NotImplementedError
 
-    def delete_everything(self, *, confirm=False):
+    def delete_everything(self):
         """Delete every blob from the storage."""
         for blob_id in self.list_blob_ids():
             self.delete(blob_id)
 
-    def import_blob(self, id_, filename):
+    def import_blob(self, id_, blobfile, callback=None):
         """Add an encrypted blob file to the storage."""
         raise NotImplementedError
 
-    def read_in_chunks(self, id_, chunk_size=1024):
+    def read_in_chunks(self, id_, offset=0, chunk_size=1024):
         """Read a blob chunk by chunk."""
         raise NotImplementedError
 

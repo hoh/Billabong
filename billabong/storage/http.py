@@ -35,21 +35,21 @@ class HTTPStorage(Storage):
 
     def contains(self, id_):
         """Return if the given blob id is present in the storage."""
-        u = urlparse(self.url)
-        conn = http.client.HTTPConnection(host=u.hostname,
-                                          port=u.port)
-        conn.request('HEAD', os.path.join(u.path, id_))
+        parsed_url = urlparse(self.url)
+        conn = http.client.HTTPConnection(host=parsed_url.hostname,
+                                          port=parsed_url.port)
+        conn.request('HEAD', os.path.join(parsed_url.path, id_))
         resp = conn.getresponse()
-        return (resp.status == 200)
+        return resp.status == 200
 
     def read_in_chunks(self, id_, offset=0, chunk_size=1024):
         """Read a blob file from HTTP chunk by chunk."""
         print('read http chunk {} {}'.format(id_, offset))
 
-        u = urlparse(self.url)
-        conn = http.client.HTTPConnection(host=u.hostname,
-                                          port=u.port)
-        conn.request('GET', os.path.join(u.path, id_),
+        parsed_url = urlparse(self.url)
+        conn = http.client.HTTPConnection(host=parsed_url.hostname,
+                                          port=parsed_url.port)
+        conn.request('GET', os.path.join(parsed_url.path, id_),
                      headers={'Range': 'bytes={}-'.format(offset)})
         resp = conn.getresponse()
 

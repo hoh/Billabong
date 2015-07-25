@@ -45,17 +45,19 @@ class FolderStorage(Storage):
         """Delete a blob from the storage."""
         os.remove(self._blob_path(blob_id))
 
-    def import_blob(self, id_, blobfile):
+    def import_blob(self, id_, blobfile, callback=None):
         """Add an encrypted blob file to the storage by copying the file."""
         copyfileobj(blobfile,
                     open(self._blob_path(id_), 'wb'))
+        if callback:
+            callback()
 
     def read_in_chunks(self, id_, offset=0, chunk_size=1024):
         """Read a blob file chunk by chunk."""
         path = self._blob_path(id_)
-        fd = open(path, 'rb')
-        fd.seek(offset)
-        return enumerate(read_in_chunks(fd, chunk_size))
+        fdesc = open(path, 'rb')
+        fdesc.seek(offset)
+        return enumerate(read_in_chunks(fdesc, chunk_size))
 
     def push_to(self, other_storage):
         """Push local blobs to another storage."""

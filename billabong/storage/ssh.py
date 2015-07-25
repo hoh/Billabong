@@ -39,12 +39,13 @@ class SSHStorage(Storage):
         return os.path.join(self.path, id_)
 
     def _ssh_connection(self):
+        """Establish an SSH connection using the storage host settings."""
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(self.host, port=self.port)
         return ssh
 
-    def list_blob_ids(self, read_aheads=50):
+    def list_blob_ids(self, *, read_aheads=50):
         """List all ids present in the blobs storage."""
         try:
             ssh = self._ssh_connection()
@@ -75,11 +76,11 @@ class SSHStorage(Storage):
             ssh = self._ssh_connection()
             sftp = ssh.open_sftp()
 
-            fd = sftp.file(path, mode='r')
-            fd.seek(offset)
+            fdesc = sftp.file(path, mode='r')
+            fdesc.seek(offset)
 
             i = 0
-            for chunk in read_in_chunks(fd, chunk_size):
+            for chunk in read_in_chunks(fdesc, chunk_size):
                 yield (i, chunk)
 
             sftp.close()
