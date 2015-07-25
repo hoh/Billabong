@@ -25,7 +25,7 @@ assert record
 
 def test_get_content(record):
     """Test getting cleartext content from a record."""
-    ID = record['id']
+    record_id = record['id']
 
-    content = b"".join(billabong.read(ID))
+    content = b"".join(billabong.read(record_id))
     assert content == b"Hello world !\n\n"

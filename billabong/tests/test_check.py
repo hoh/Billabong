@@ -26,8 +26,7 @@ assert record
 
 def test_check_data(record):
     """Test validation of data integrity using 'check_data'."""
-    ID = record['id']
-    check_data(id_=ID)
+    check_data(id_=record['id'])
     check_data(record=record)
 
     with pytest.raises(ValueError):

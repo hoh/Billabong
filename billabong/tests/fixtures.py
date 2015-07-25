@@ -25,14 +25,15 @@ from billabong.settings import inventory, stores
 @pytest.fixture
 def record(request):
     """Import a file, return the record and delete them after the test."""
-    record = billabong.add_file('hello.txt', key=b'0'*32)
+    new_record = billabong.add_file('hello.txt', key=b'0'*32)
 
     def fin():
-        inventory.delete(record['id'])
+        """Delete created record and blob at the end of the test."""
+        inventory.delete(new_record['id'])
         for store in stores:
             try:
-                store.delete(record['blob'])
+                store.delete(new_record['blob'])
             except (NotImplementedError, FileNotFoundError):
                 pass
     request.addfinalizer(fin)
-    return record
+    return new_record

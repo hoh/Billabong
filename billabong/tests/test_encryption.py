@@ -20,8 +20,8 @@
 from billabong.settings import stores
 from billabong.encryption import random_key, copy_and_encrypt, decrypt_blob
 
-from .fixtures import record as record_
-assert record_
+from .fixtures import record
+assert record
 
 STORE = stores[0]
 

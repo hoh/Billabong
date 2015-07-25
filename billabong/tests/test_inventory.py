@@ -25,27 +25,29 @@ assert record
 
 def test_list_records(record):
     """Test listing record ids."""
-    ID = record['id']
+    record_id = record['id']
     ids = list(inventory.list_record_ids())
-    assert set(ids).issuperset([ID])
+    assert set(ids).issuperset([record_id])
 
 
 def test_list_paths(record):
     """Test listing record paths."""
+    assert record
     paths = list(inventory.list_record_paths())
     assert set(paths).issuperset(['hello.txt'])
 
 
 def test_list_filenames(record):
     """Test listing record filenames."""
+    assert record
     filenames = list(inventory.list_record_filenames())
     assert set(filenames).issuperset(['hello.txt'])
 
 
 def test_get_meta(record):
     """Test getting a record from the inventory."""
-    ID = record['id']
-    meta = inventory.get_record(ID)
+    record_id = record['id']
+    meta = inventory.get_record(record_id)
     expected = {
         'info': {'filename': 'hello.txt',
                  'mimetype': 'text/plain',
@@ -59,9 +61,9 @@ def test_get_meta(record):
 
 def test_search_meta(record):
     """Test searching for data in the records."""
-    ID = record['id']
+    record_id = record['id']
     ids = list(inventory.search('hello'))
-    assert set(ids).issuperset([ID])
+    assert set(ids).issuperset([record_id])
 
     non_existing_ids = list(inventory.search('DOES NOT EXIST'))
     assert non_existing_ids == []
@@ -69,9 +71,9 @@ def test_search_meta(record):
 
 def test_id_from_filename(record):
     """Test getting a record id from its filename."""
-    ID = record['id']
+    record_id = record['id']
     id_ = inventory.id_from_filename('hello.txt')
-    assert id_ == ID
+    assert id_ == record_id
 
     non_existing_id = inventory.id_from_filename('DOES NOT EXIST')
     assert non_existing_id is None
@@ -84,5 +86,5 @@ def test_delete_everything():
 
 def test_search_id(record):
     """Test searching records based on their id prefix."""
-    ID = record['id']
-    inventory.search_id(ID[:10])
+    record_id = record['id']
+    inventory.search_id(record_id[:10])

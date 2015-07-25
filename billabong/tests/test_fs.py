@@ -28,16 +28,16 @@ assert record
 
 
 @pytest.fixture
-def fs():
+def fusefs():
     """Fixture that creates a Fuse filesystem instance."""
     return BillabongFilesystem()
 
 
 def test_id_from_path(record):
     """Test path resolver."""
-    ID = record['id']
+    record_id = record['id']
     assert id_from_path('/blobs/SOMEID') == 'SOMEID'
-    assert id_from_path('/files/hello.txt') == ID
+    assert id_from_path('/files/hello.txt') == record_id
 
     with pytest.raises(FuseOSError):
         id_from_path('/DOES NOT EXIST')
@@ -46,29 +46,30 @@ def test_id_from_path(record):
         id_from_path('/files/DOES NOT EXIST')
 
 
-def test_readdir(record, fs):
+def test_readdir(record, fusefs):
     """Test directory listing."""
-    ID = record['id']
-    assert fs.readdir('/', None) == ['blobs', 'files']
-    assert set(fs.readdir('/blobs', None)).issuperset([ID])
-    assert set(fs.readdir('/files', None)).issuperset(['hello.txt'])
-    assert fs.readdir('/does_not_exist', None) is None
+    record_id = record['id']
+    assert fusefs.readdir('/', None) == ['blobs', 'files']
+    assert set(fusefs.readdir('/blobs', None)).issuperset([record_id])
+    assert set(fusefs.readdir('/files', None)).issuperset(['hello.txt'])
+    assert fusefs.readdir('/does_not_exist', None) is None
 
 
-def test_read(record, fs):
+def test_read(record, fusefs):
     """Test file reading."""
-    ID = record['id']
-    data = fs.read('/blobs/' + ID, 100, 0, None)
+    record_id = record['id']
+    data = fusefs.read('/blobs/' + record_id, 100, 0, None)
     assert data == b"Hello world !\n\n"
 
-    data = fs.read('/files/hello.txt', 100, 0, None)
+    data = fusefs.read('/files/hello.txt', 100, 0, None)
     assert data == b"Hello world !\n\n"
 
     with pytest.raises(FuseOSError):
-        fs.read('/files/does_not_exist', 100, 0, None)
+        fusefs.read('/files/does_not_exist', 100, 0, None)
 
 
-def test_getattr(record, fs):
+def test_getattr(record, fusefs):
     """Test getting file or directory attributes."""
-    assert fs.getattr('/').get('st_size')
-    assert fs.getattr('/files/hello.txt').get('st_size')
+    assert record
+    assert fusefs.getattr('/').get('st_size')
+    assert fusefs.getattr('/files/hello.txt').get('st_size')
