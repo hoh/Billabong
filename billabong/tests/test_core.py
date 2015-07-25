@@ -36,3 +36,14 @@ def test_read(record):
     reader = billabong.read(id_)
     data = b''.join(reader)
     assert data == open("hello.txt", 'rb').read()
+
+
+def test_delete():
+    """Test deleting a record and its blob from the inventory."""
+    record = billabong.add_file('hello.txt')
+    id_ = record['id']
+    blob_id = record['blob']
+
+    billabong.delete(id_)
+    assert id_ not in billabong.inventory.list_record_ids()
+    assert not billabong.stores[0].contains(blob_id)
