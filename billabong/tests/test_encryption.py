@@ -20,30 +20,30 @@
 from billabong.settings import stores
 from billabong.encryption import random_key, copy_and_encrypt, decrypt_blob
 
-from .fixtures import record
-assert record
+from .fixtures import record as record_
+assert record_
 
-store = stores[0]
+STORE = stores[0]
 
 
 def test_random_key():
     """Test generating a random key."""
     key = random_key()
     assert len(key) == 32
-    assert type(key) is bytes
+    assert isinstance(key, bytes)
 
 
 def test_copy_and_encrypt(record):
     """Test file encryption."""
-    blob_id_ = copy_and_encrypt(store, 'hello.txt', key=b'0'*32)
+    blob_id_ = copy_and_encrypt(STORE, 'hello.txt', key=b'0'*32)
     assert blob_id_ == record['blob']
 
 
 def test_decrypt_blob(record):
     """Test file decryption."""
     blob_id = record['blob']
-    g = decrypt_blob(store, blob_id, b'0'*32)
-    data = b''.join(g)
+    gen = decrypt_blob(STORE, blob_id, b'0'*32)
+    data = b''.join(gen)
     assert data == b'Hello world !\n\n'
 
 
@@ -55,9 +55,9 @@ def test_decrypt_offset():
     assert expected == (b"Qui animated corpse, cricket bat max brucks "
                         b"terribilem incessu zomby.")
 
-    id_ = copy_and_encrypt(store, 'lorem.txt', key=b'0'*32)
+    id_ = copy_and_encrypt(STORE, 'lorem.txt', key=b'0'*32)
 
-    g = decrypt_blob(store, id_, b'0'*32, offset=offset, length=length)
+    gen = decrypt_blob(STORE, id_, b'0'*32, offset=offset, length=length)
 
-    data = b''.join(g)
+    data = b''.join(gen)
     assert data == expected
