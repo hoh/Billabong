@@ -33,8 +33,10 @@ def test_cli(record):
     ID = record['id']
 
     run('ls')
+    run('records')
     run('blobs')
     run('info ' + ID)
+    run('info ' + ID + ' --no-color')
     run('search txt')
     run('check')
     run('push')
@@ -42,3 +44,5 @@ def test_cli(record):
     run('echo ' + ID)
     run('status')
     run('version')
+
+    run('add hello.txt')
