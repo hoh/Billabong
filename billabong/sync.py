@@ -28,13 +28,6 @@ def push_blobs():
             print("Push not implemented for '{}'".format(store))
 
 
-def push_blob(blob_id, storage, remote):
-    print('pushing blob', blob_id)
-    path_local = stores[0]._blob_path(blob_id)
-    path_remote = remote._blob_path(blob_id)
-    copy2(path_local, path_remote)
-
-
 def pull_blobs():
     for store in stores[1:]:
         try:

@@ -17,7 +17,7 @@
 
 
 from billabong.settings import stores
-from billabong.sync import push_blobs, push_blob
+from billabong.sync import push_blobs
 
 from .fixtures import record
 assert record
@@ -29,11 +29,4 @@ remote = stores[1]
 def test_push_blobs():
     remote.delete_everything(confirm=True)
     push_blobs()
-    remote.delete_everything(confirm=True)
-
-
-def test_push_blob(record):
-    ID = record['blob']
-    remote.delete_everything(confirm=True)
-    push_blob(ID, store, remote)
     remote.delete_everything(confirm=True)
