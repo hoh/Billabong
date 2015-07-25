@@ -17,15 +17,17 @@
 
 
 from billabong import billabong
-from billabong.settings import inventory, storage
+from billabong.settings import inventory, stores
+
+store = stores[0]
 
 
 def test_list_blobs():
     meta = billabong.add_file('hello.txt', key=b'0'*32)
     assert meta
-    blobs = list(storage.list_blob_ids())
+    blobs = list(store.list_blob_ids())
     assert blobs
     assert len(blobs) > 1
 
     inventory.delete(meta['id'])
-    storage.delete(meta['blob'])
+    store.delete(meta['blob'])

@@ -29,10 +29,10 @@ assert HTTPStorage
 assert SSHStorage
 
 
-def load_storage(settings):
+def load_store(store_settings):
     """Instanciate a storage instance from settings."""
-    type_ = settings['type']
-    args = settings.get('args', {})
+    type_ = store_settings['type']
+    args = store_settings.get('args', {})
 
     if type_ == 'FolderStorage':
         return FolderStorage(**args)

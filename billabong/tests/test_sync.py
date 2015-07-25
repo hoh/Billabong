@@ -16,13 +16,14 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from billabong.settings import storage, remote_storages
+from billabong.settings import stores
 from billabong.sync import push_blobs, push_blob
 
 from .fixtures import record
 assert record
 
-remote = remote_storages[0]
+store = stores[0]
+remote = stores[1]
 
 
 def test_push_blobs():
@@ -34,5 +35,5 @@ def test_push_blobs():
 def test_push_blob(record):
     ID = record['blob']
     remote.delete_everything(confirm=True)
-    push_blob(ID, storage, remote)
+    push_blob(ID, store, remote)
     remote.delete_everything(confirm=True)

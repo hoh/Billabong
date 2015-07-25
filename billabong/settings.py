@@ -19,7 +19,7 @@
 import os
 import json
 
-from .storage import load_storage
+from .storage import load_store
 from .inventory import load_inventory
 
 settings_path_candidates = [
@@ -40,8 +40,4 @@ settings = json.load(open(settings_path))
 TMPSTORAGE_PATH = settings.get('tmp_directory', '/tmp')
 
 inventory = load_inventory(settings['inventory'])
-storage = load_storage(settings['storage'])
-
-
-remote_storages = [load_storage(r)
-                   for r in settings.get('storages', ())]
+stores = [load_store(r) for r in settings['stores']]

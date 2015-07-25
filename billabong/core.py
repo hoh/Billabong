@@ -28,7 +28,7 @@ from .check import compute_hash
 
 class Billabong:
 
-    """High-level interface above inventory and storages."""
+    """High-level interface above inventory and stores."""
 
     def __init__(self, inventory, stores):
         self.inventory = inventory
@@ -78,7 +78,10 @@ class Billabong:
         """Delete a Record and the corresponding blob."""
         blob_id = self.inventory.get_record(id_)['blob']
         for store in self.stores:
-            store.delete(blob_id)
+            try:
+                store.delete(blob_id)
+            except NotImplementedError:
+                pass
         self.inventory.delete(id_)
 
     def read(self, id_, length=None, offset=0, chunk_size=1024):

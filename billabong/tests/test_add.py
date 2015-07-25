@@ -22,9 +22,9 @@ import json
 from billabong import billabong
 from billabong.utils import json_handler
 
-from billabong.settings import inventory, storage
+from billabong.settings import inventory, stores
 
-
+store = stores[0]
 HASH = "fc7d4f43945d94c874415e3bd9a6e181f8c84f8a36f586389405e391c01e48b2"
 
 
@@ -40,14 +40,14 @@ def test_add_file():
     assert meta['info']['filename']
 
     inventory.delete(meta['id'])
-    storage.delete(meta['blob'])
+    store.delete(meta['blob'])
 
 
 def test_add_random_key():
     meta = billabong.add_file('lorem.txt')
     assert meta
     inventory.delete(meta['id'])
-    storage.delete(meta['blob'])
+    store.delete(meta['blob'])
 
 
 def test_add_file_not_found():
@@ -59,4 +59,4 @@ def test_add_file_json():
     meta = billabong.add_file('hello.txt', key=b'0'*32)
     assert len(json.dumps(meta, default=json_handler)) > 1  # JSON serializable
     inventory.delete(meta['id'])
-    storage.delete(meta['blob'])
+    store.delete(meta['blob'])

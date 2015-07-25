@@ -16,11 +16,13 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-from billabong.settings import storage
+from billabong.settings import stores
 from billabong.encryption import random_key, copy_and_encrypt, decrypt_blob
 
 from .fixtures import record
 assert record
+
+store = stores[0]
 
 
 def test_random_key():
@@ -30,13 +32,13 @@ def test_random_key():
 
 
 def test_copy_and_encrypt(record):
-    blob_id_ = copy_and_encrypt(storage, 'hello.txt', key=b'0'*32)
+    blob_id_ = copy_and_encrypt(store, 'hello.txt', key=b'0'*32)
     assert blob_id_ == record['blob']
 
 
 def test_decrypt_blob(record):
     blob_id = record['blob']
-    g = decrypt_blob(storage, blob_id, b'0'*32)
+    g = decrypt_blob(store, blob_id, b'0'*32)
     data = b''.join(g)
     assert data == b'Hello world !\n\n'
 
@@ -48,9 +50,9 @@ def test_decrypt_offset():
     assert expected == (b"Qui animated corpse, cricket bat max brucks "
                         b"terribilem incessu zomby.")
 
-    id_ = copy_and_encrypt(storage, 'lorem.txt', key=b'0'*32)
+    id_ = copy_and_encrypt(store, 'lorem.txt', key=b'0'*32)
 
-    g = decrypt_blob(storage, id_, b'0'*32, offset=offset, length=length)
+    g = decrypt_blob(store, id_, b'0'*32, offset=offset, length=length)
 
     data = b''.join(g)
     assert data == expected

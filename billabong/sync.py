@@ -17,21 +17,27 @@
 
 
 from shutil import copy2
-from .settings import storage, remote_storages
+from .settings import stores
 
 
 def push_blobs():
-    for remote in remote_storages:
-        storage.push_to(remote)
+    for store in stores[1:]:
+        try:
+            stores[0].push_to(store)
+        except NotImplementedError:
+            print("Push not implemented for '{}'".format(store))
 
 
 def push_blob(blob_id, storage, remote):
     print('pushing blob', blob_id)
-    path_local = storage._blob_path(blob_id)
+    path_local = stores[0]._blob_path(blob_id)
     path_remote = remote._blob_path(blob_id)
     copy2(path_local, path_remote)
 
 
 def pull_blobs():
-    for remote in remote_storages:
-        remote.push_to(storage)
+    for store in stores[1:]:
+        try:
+            store.push_to(stores[0])
+        except NotImplementedError:
+            print("Pull not implemented for '{}'".format(store))

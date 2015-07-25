@@ -18,42 +18,19 @@
 """Test core Billabong classes."""
 
 
-import pytest
-
-from billabong.settings import inventory, storage
-from billabong.core import Billabong
+from .fixtures import billabong, record
+assert record
 
 
-@pytest.fixture
-def billabong():
-    return Billabong(inventory, [storage])
-
-
-@pytest.fixture
-def record(billabong):
-    filepath = "hello.txt"
-    record = billabong.add_file(filepath=filepath)
-    return record
-
-
-def test_add(billabong):
-    filepath = "hello.txt"
-    record = billabong.add_file(filepath=filepath)
-    assert record['info']['filename'] == filepath
-    billabong.delete(record['id'])
-
-
-def test_get(billabong, record):
+def test_get(record):
     id_ = record['id']
     record_obtained = billabong.get(id_)
     for key in record.keys():
         assert record_obtained[key] == record[key]
-    billabong.delete(record['id'])
 
 
-def test_read(billabong, record):
+def test_read(record):
     id_ = record['id']
     reader = billabong.read(id_)
     data = b''.join(reader)
     assert data == open("hello.txt", 'rb').read()
-    billabong.delete(record['id'])

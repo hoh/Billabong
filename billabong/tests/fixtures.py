@@ -18,7 +18,7 @@
 
 import pytest
 from billabong import billabong
-from billabong.settings import inventory, storage
+from billabong.settings import inventory, stores
 
 
 @pytest.fixture
@@ -27,6 +27,10 @@ def record(request):
 
     def fin():
         inventory.delete(record['id'])
-        storage.delete(record['blob'])
+        for store in stores:
+            try:
+                store.delete(record['blob'])
+            except (NotImplementedError, FileNotFoundError):
+                pass
     request.addfinalizer(fin)
     return record

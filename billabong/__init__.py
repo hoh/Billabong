@@ -22,11 +22,11 @@ A reliable, distributed, encrypted storage and backup solution for all of
 your photos, videos, music and other static data.
 """
 
-from .settings import inventory, storage
+from .settings import inventory, stores
 from .core import Billabong
 
 __author__ = "Hugo Herter http://hugoherter.com"
 __version__ = "0.2.0"
 
 
-billabong = Billabong(inventory, [storage])
+billabong = Billabong(inventory, stores)

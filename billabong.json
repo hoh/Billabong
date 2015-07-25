@@ -3,24 +3,15 @@
         "type": "FolderInventory",
         "args": {"path": "data/inventory"}
     },
-    "storage": {
-        "type": "FolderStorage",
-        "args": {"path": "data/storage"}
-    },
-    "storage-disabled": {
-        "type": "HTTPStorage",
-        "args": {"url": "http://okso.be/F/blobs"}
-    },
-    "storage-disabled": {
-        "type": "SSHStorage",
-        "args": {
-            "host": "s.okso.me",
-            "port": 10022,
-            "path": "/tmp/foo"
+    "stores": [
+        {
+            "type": "FolderStorage",
+            "args": {"path": "data/storage"}
+        },
+        {
+            "type": "FolderStorage",
+            "args": {"path": "data/remote"}
         }
-    },
-    "storages": [
-        {"type": "FolderStorage", "args": {"path": "data/remote"}}
     ],
     "tmp_directory": "/tmp",
     "mount": "./mount"

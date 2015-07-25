@@ -26,7 +26,7 @@ from base64 import b64decode
 from .encryption import hashing, decrypt_blob
 from .utils import read_in_chunks
 from .exceptions import CheckError
-from .settings import inventory, storage
+from .settings import inventory, stores
 
 
 def compute_hash(file_object, chunk_size=1024):
@@ -59,7 +59,7 @@ def check_data(id=None, meta=None, raises=False):
 def check_enc_data(blob_id, raises=False):
     "Check the validity of an encrypted blob"
 
-    enc_path = storage._blob_path(blob_id)
+    enc_path = stores[0]._blob_path(blob_id)
     with open(enc_path, 'rb') as enc_file:
         enc_hash = compute_hash(enc_file)
 
@@ -75,7 +75,7 @@ def check_enc_data(blob_id, raises=False):
 def check_clear_data(id, key, hash):
     "Check the validity of the clear data inside a blob"
 
-    clear_data = decrypt_blob(storage, id, key)
+    clear_data = decrypt_blob(stores[0], id, key)
 
     clear_hash = hashing()
     for chunk in clear_data:
