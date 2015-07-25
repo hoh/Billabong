@@ -42,6 +42,7 @@ from billabong.sync import push_blobs, pull_blobs
 
 
 def print_record(record):
+    """Print a record with indentation and syntax highlighting if available."""
     if highlight and '--no-color' not in sys.argv:
         print(highlight(dumps(record),
                         JsonLexer(),
@@ -52,6 +53,7 @@ def print_record(record):
 
 @command
 def ls():
+    """List short records ids with filename from the inventory."""
     format_ = "{:>8} {:>8} {:>8}"
     for r in inventory.list_records():
         print(format_.format(r['id'][:8],
@@ -83,6 +85,7 @@ def add(*targets):
 
 @command
 def info(*ids):
+    """Print record content from one or several record ids"""
     for id_ in ids:
         meta = inventory.get_record(id_)
         print_record(meta)
@@ -90,6 +93,7 @@ def info(*ids):
 
 @command
 def echo(id_):
+    """Print blob content to standard output for the given record id."""
     data = billabong.read(id_)
 
     # Write bytes to stdout:
@@ -101,13 +105,14 @@ def echo(id_):
 
 @command
 def search(term):
+    """Search for the given term and return id of records matching the term."""
     for i in inventory.search(term):
         print(i)
 
 
 @command
 def check():
-    "Check the validity of all blobs and metadata"
+    """Check the validity of all blobs and metadata."""
     for i in inventory.list_record_ids():
         check_data(i)
         check_enc_data(i)
@@ -115,19 +120,19 @@ def check():
 
 @command
 def push():
-    "Push blobs to sync storage"
+    """Push blobs to sync storage."""
     push_blobs()
 
 
 @command
 def pull():
-    "Pull blobs from sync storage"
+    """Pull blobs from sync storage."""
     pull_blobs()
 
 
 @command
 def status():
-    "Print a global status of the inventory and storage."
+    """Print a global status of the inventory and storage."""
     print("Inventory:")
     print("  {:>4} records".format(
           len(list(inventory.list_record_ids()))))
@@ -137,12 +142,14 @@ def status():
 
 @command
 def mount(path=None, foreground=False):
+    """Mount data as a filesystem."""
     from billabong.fs import mount_fuse
     mount_fuse(path, foreground)
 
 
 @command
 def version():
+    """Print software version."""
     from billabong import __version__
     print(__version__)
 
