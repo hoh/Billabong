@@ -33,6 +33,16 @@ class HTTPStorage(Storage):
         """Initialize an HTTP storage based on the given root url."""
         self.url = url
 
+    def contains(self, id_):
+        """Return if the given blob id is present in the storage."""
+        u = urlparse(self.url)
+        conn = http.client.HTTPConnection(host=u.hostname,
+                                          port=u.port)
+        conn.request('HEAD', os.path.join(u.path, id_))
+        resp = conn.getresponse()
+        return (resp.status == 200)
+
+
     def read_in_chunks(self, id_, offset=0, chunk_size=1024):
         """Read a blob file from HTTP chunk by chunk."""
         print('read http chunk {} {}'.format(id_, offset))
