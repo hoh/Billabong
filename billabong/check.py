@@ -30,8 +30,10 @@ from .settings import inventory, stores
 
 
 def compute_hash(file_object, chunk_size=1024):
-    """Compute the hash of the content of a file object using
-    the given hashing function.
+    """Return the hash of a file object.
+
+    Compute the hash of the content of a file object using
+    the given hashing function, by reading it chunk by chunk.
     """
     file_hash = hashing()
     for chunk in read_in_chunks(file_object, chunk_size):
@@ -40,7 +42,7 @@ def compute_hash(file_object, chunk_size=1024):
 
 
 def check_data(id=None, meta=None, raises=False):
-
+    """Check the integrity of the data for a record id or record."""
     if id and not meta:
         meta = inventory.get_record(id)
     elif meta and not id:
@@ -57,8 +59,7 @@ def check_data(id=None, meta=None, raises=False):
 
 
 def check_enc_data(blob_id, raises=False):
-    "Check the validity of an encrypted blob"
-
+    """Check the validity of an encrypted blob."""
     enc_path = stores[0]._blob_path(blob_id)
     with open(enc_path, 'rb') as enc_file:
         enc_hash = compute_hash(enc_file)
@@ -73,8 +74,7 @@ def check_enc_data(blob_id, raises=False):
 
 
 def check_clear_data(id, key, hash):
-    "Check the validity of the clear data inside a blob"
-
+    """Check the validity of the clear data inside a blob."""
     clear_data = decrypt_blob(stores[0], id, key)
 
     clear_hash = hashing()
