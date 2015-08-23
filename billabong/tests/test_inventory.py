@@ -49,6 +49,11 @@ def test_list_tags(record):
     assert record['info']['tags'] == ['hello', 'ipsum']
 
 
+def test_list_records_with_tag(record):
+    """Test listing records by tag."""
+    assert record in inventory.list_records_with_tag('hello')
+
+
 def test_get_meta(record):
     """Test getting a record from the inventory."""
     record_id = record['id']

@@ -18,6 +18,7 @@
 
 """FUSE file system over the blob system."""
 
+import re
 import errno
 
 from fuse import FUSE, FuseOSError, Operations
@@ -30,6 +31,9 @@ def id_from_path(path):
     """Get the blob id from a FUSE path."""
     if path.startswith('/blobs/'):
         id_ = path[len('/blobs/'):]
+    elif path.startswith('/tags/'):
+        id_ = path[len('/tags/'):].split('/')[-1]
+        print('id', id_)
     elif path.startswith('/files/'):
         filename = path.split('/')[-1]
         id_ = inventory.id_from_filename(filename)
@@ -42,6 +46,12 @@ def id_from_path(path):
         raise FuseOSError(errno.ENOENT)
 
 
+def is_tag(path):
+    """True if the path is a tag directory."""
+    print('P', path)
+    return re.match(r'^\/tags\/?\w*\/?$', path)
+
+
 class BillabongFilesystem(Operations):
 
     """Fuse file system on top of Billabong."""
@@ -50,7 +60,7 @@ class BillabongFilesystem(Operations):
 
     def getattr(self, path, fh=None):
         """Hardcoded implementation of getattr."""
-        if path in ('/', '/blobs', '/files'):
+        if path in ('/', '/blobs', '/files', '/tags') or is_tag(path):
             return dict(
                 st_mode=16877,
                 st_ino=7077891,
@@ -83,9 +93,14 @@ class BillabongFilesystem(Operations):
     def readdir(self, path, fh):
         """List directory content."""
         if path == '/':
-            return ['blobs', 'files']
+            return ['blobs', 'files', 'tags']
         elif path == '/blobs':
             return inventory.list_record_ids()
+        elif path == '/tags':
+            return inventory.list_record_tags()
+        elif path.startswith('/tags/'):
+            tag = path[len('/tags/'):]
+            return inventory.list_records_ids_with_tag(tag)
         elif path == '/files':
             return inventory.list_record_filenames()
         else:
@@ -93,7 +108,7 @@ class BillabongFilesystem(Operations):
 
     def read(self, path, length, offset, fh):
         """Read file data."""
-        if path.startswith('/blobs/'):
+        if path.startswith('/blobs/') or path.startswith('/tags/'):
             id_ = id_from_path(path)
             print(path, length, offset, fh)
             data = billabong.read(id_, offset=offset, length=length)

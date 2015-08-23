@@ -49,7 +49,7 @@ def test_id_from_path(record):
 def test_readdir(record, fusefs):
     """Test directory listing."""
     record_id = record['id']
-    assert fusefs.readdir('/', None) == ['blobs', 'files']
+    assert fusefs.readdir('/', None) == ['blobs', 'files', 'tags']
     assert set(fusefs.readdir('/blobs', None)).issuperset([record_id])
     assert set(fusefs.readdir('/files', None)).issuperset(['hello.txt'])
     assert fusefs.readdir('/does_not_exist', None) is None

@@ -78,6 +78,17 @@ class Inventory:
         for value in self.list_record_keyvalues('filename'):
             yield value.replace('/', '.')
 
+    def list_records_with_tag(self, tag):
+        """List all records tagged with the given tag."""
+        for record in self.list_records():
+            if tag in record['info'].get('tags', []):
+                yield record
+
+    def list_records_ids_with_tag(self, tag):
+        """List id of all records tagged with the given tag."""
+        for record in self.list_records_with_tag(tag):
+            yield record['id']
+
     def search(self, term):
         """Search for a term in records and return the corresponding ids."""
         for record in self.list_records():
