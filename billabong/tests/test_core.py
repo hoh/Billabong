@@ -22,6 +22,12 @@ from .fixtures import billabong, record
 assert record
 
 
+def test_add_file_with_tags():
+    tags = ['hello', 'world']
+    record = billabong.add_file('hello.txt', key=b'0'*32, tags=tags)
+    billabong.delete(record['id'])
+
+
 def test_get(record):
     """Test getting a record from an id on Billabong object."""
     id_ = record['id']

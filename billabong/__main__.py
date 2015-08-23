@@ -76,10 +76,11 @@ def blobs():
 
 
 @command
-def add(*targets):
+def add(tags='', *targets):
     """Import one or several files and print resulting records."""
+    tags = tags.split(',') if tags else None
     for target in targets:
-        record = billabong.add_file(target)
+        record = billabong.add_file(target, tags=tags)
         print_record(record)
 
 

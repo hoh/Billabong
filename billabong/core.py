@@ -37,7 +37,7 @@ class Billabong:
         self.inventory = inventory
         self.stores = stores
 
-    def add_file(self, filepath, *, key=None):
+    def add_file(self, filepath, *, key=None, tags=[]):
         """Import a file into Billabong and return the corresponding record."""
         # Resolve symlinks
         realpath = os.path.realpath(filepath)
@@ -67,6 +67,7 @@ class Billabong:
                 'mimetype': magic.from_file(realpath, mime=True).decode(),
                 'filename': os.path.basename(filepath),
                 'path': filepath,
+                'tags': tags if tags else [],
                 }
             }
 

@@ -52,7 +52,8 @@ def test_get_meta(record):
         'info': {'filename': 'hello.txt',
                  'mimetype': 'text/plain',
                  'path': 'hello.txt',
-                 'type': 'ASCII text'},
+                 'type': 'ASCII text',
+                 'tags': []},
         'size': 15,
     }
     for key in expected:
