@@ -25,7 +25,8 @@ from billabong.settings import inventory, stores
 @pytest.fixture
 def record(request):
     """Import a file, return the record and delete them after the test."""
-    new_record = billabong.add_file('hello.txt', key=b'0'*32)
+    new_record = billabong.add_file('hello.txt', tags=['hello', 'ipsum'],
+                                    key=b'0'*32)
 
     def fin():
         """Delete created record and blob at the end of the test."""

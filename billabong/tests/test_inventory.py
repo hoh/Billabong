@@ -44,6 +44,11 @@ def test_list_filenames(record):
     assert set(filenames).issuperset(['hello.txt'])
 
 
+def test_list_tags(record):
+    """Test listing record tags."""
+    assert record['info']['tags'] == ['hello', 'ipsum']
+
+
 def test_get_meta(record):
     """Test getting a record from the inventory."""
     record_id = record['id']
@@ -53,7 +58,7 @@ def test_get_meta(record):
                  'mimetype': 'text/plain',
                  'path': 'hello.txt',
                  'type': 'ASCII text',
-                 'tags': []},
+                 'tags': ['hello', 'ipsum']},
         'size': 15,
     }
     for key in expected:

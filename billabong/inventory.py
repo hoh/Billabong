@@ -60,6 +60,15 @@ class Inventory:
             record = self.get_record(id_)
             yield record['info'][key]
 
+    def list_record_tags(self):
+        """List the set of distinct tags present in all records."""
+        yielded = set()
+        for record in self.list_records():
+            tags = set(record['info'].get('tags', []))
+            for tag in tags - yielded:
+                yield tag
+            yielded.update(tags)
+
     def list_record_paths(self):
         """List all the paths of all records, used for 'ls' for example."""
         yield from self.list_record_keyvalues('path')

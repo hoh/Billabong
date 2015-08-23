@@ -76,6 +76,13 @@ def blobs():
 
 
 @command
+def tags():
+    """List all tags from the inventory."""
+    for i in inventory.list_record_tags():
+        print(i)
+
+
+@command
 def add(tags='', *targets):
     """Import one or several files and print resulting records."""
     tags = tags.split(',') if tags else None
