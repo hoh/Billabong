@@ -62,16 +62,19 @@ def check_enc_data(blob_id, raises=False):
     with open(enc_path, 'rb') as enc_file:
         enc_hash = compute_hash(enc_file)
 
-    if blob_id != enc_hash.hexdigest():
+    if blob_id == enc_hash.hexdigest():
+        return True
+    else:
+        reason = ("Encrypted data does not match the hash for id '{}'"
+                  .format(blob_id))
         if raises:
-            raise CheckError(
-                "Data does not match the hash for id '{}'".format(id))
+            raise CheckError(reason)
         else:
-            logging.error(
-                "Data does not match the hash for id '{}'".format(id))
+            logging.error(reason)
+        return False
 
 
-def check_clear_data(id_, key, hash_):
+def check_clear_data(id_, key, hash_, raises=False):
     """Check the validity of the clear data inside a blob."""
     clear_data = decrypt_blob(stores[0], id_, key)
 
@@ -79,5 +82,13 @@ def check_clear_data(id_, key, hash_):
     for chunk in clear_data:
         clear_hash.update(chunk)
 
-    if hash_ != "sha256-" + clear_hash.hexdigest():
-        raise CheckError()
+    if hash_ == "sha256-" + clear_hash.hexdigest():
+        return True
+    else:
+        reason = ("Clear data does not match the hash for id '{}'"
+                  .format(id_))
+        if raises:
+            raise CheckError(reason)
+        else:
+            logging.error(reason)
+        return False
