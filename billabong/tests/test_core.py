@@ -23,6 +23,7 @@ assert record
 
 
 def test_add_file_with_tags():
+    """Test that a file can be added with tags."""
     tags = ['hello', 'world']
     record = billabong.add_file('hello.txt', key=b'0'*32, tags=tags)
     billabong.delete(record['id'])
