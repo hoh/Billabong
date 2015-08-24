@@ -26,7 +26,7 @@ from .settings import inventory, stores
 from .core import Billabong
 
 __author__ = "Hugo Herter http://hugoherter.com"
-__version__ = "0.2.3"
+__version__ = "0.2.4"
 
 
 billabong = Billabong(inventory, stores)
