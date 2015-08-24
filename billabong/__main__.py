@@ -36,7 +36,7 @@ except ImportError:
 
 from billabong import billabong
 from billabong.settings import inventory, stores
-from billabong.check import check_data, check_enc_data
+from billabong.check import check_data
 from billabong.utils import dumps
 from billabong.sync import push_blobs, pull_blobs
 
@@ -123,7 +123,6 @@ def check():
     """Check the validity of all blobs and metadata."""
     for i in inventory.list_record_ids():
         check_data(i)
-        check_enc_data(i)
 
 
 @command
@@ -136,6 +135,12 @@ def push():
 def pull():
     """Pull blobs from sync storage."""
     pull_blobs()
+
+
+@command
+def backup():
+    """Copy the inventory into a encrypted file on a remote system."""
+    raise NotImplementedError
 
 
 @command
