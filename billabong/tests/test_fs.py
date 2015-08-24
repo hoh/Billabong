@@ -50,7 +50,10 @@ def test_readdir(record, fusefs):
     """Test directory listing."""
     record_id = record['id']
     assert fusefs.readdir('/', None) == ['blobs', 'files', 'tags']
+    assert set(fusefs.readdir('/tags', None)) == {'hello', 'ipsum'}
     assert set(fusefs.readdir('/blobs', None)).issuperset([record_id])
+    assert set(fusefs.readdir('/tags/hello', None)).issuperset([record_id])
+    assert set(fusefs.readdir('/tags/ipsum', None)).issuperset([record_id])
     assert set(fusefs.readdir('/files', None)).issuperset(['hello.txt'])
     assert fusefs.readdir('/does_not_exist', None) is None
 
@@ -59,6 +62,9 @@ def test_read(record, fusefs):
     """Test file reading."""
     record_id = record['id']
     data = fusefs.read('/blobs/' + record_id, 100, 0, None)
+    assert data == b"Hello world !\n\n"
+
+    data = fusefs.read('/tags/hello/' + record_id, 100, 0, None)
     assert data == b"Hello world !\n\n"
 
     data = fusefs.read('/files/hello.txt', 100, 0, None)

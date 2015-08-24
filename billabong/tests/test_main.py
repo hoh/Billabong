@@ -35,6 +35,7 @@ def test_cli(record):
     run('ls')
     run('records')
     run('blobs')
+    run('tags')
     run('info ' + ID)
     run('info ' + ID + ' --no-color')
     run('search txt')
