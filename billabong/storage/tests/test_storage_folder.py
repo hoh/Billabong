@@ -41,3 +41,8 @@ def test_blob_path(storage):
     """Test internal blob_path method."""
     expected_path = storage.path + '/SOMEID'
     assert storage._blob_path(id_='SOMEID') == expected_path
+
+
+def test_repr(storage):
+    """Test the string representation of the storage."""
+    assert str(storage) == 'Folder: /tmp/test_storage'

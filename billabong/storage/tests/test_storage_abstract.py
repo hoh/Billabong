@@ -49,3 +49,9 @@ def test_not_implemented():
 
     with pytest.raises(NotImplementedError):
         s.push_blob_to(id_='SOMEID', other_storage=Storage())
+
+
+def test_repr():
+    """Test the string representation of the Storage."""
+    s = Storage()
+    assert str(s) == 'Storage'

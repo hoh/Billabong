@@ -33,3 +33,8 @@ def test__init(storage):
     assert storage.path
     assert storage.host
     assert storage.port
+
+
+def test_repr(storage):
+    """Test the string representation of the storage."""
+    assert str(storage) == 'SSH: testserver:/tmp -p 22'

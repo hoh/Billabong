@@ -86,3 +86,8 @@ class SSHStorage(Storage):
             sftp.close()
         finally:
             ssh.close()
+
+    def __repr__(self):
+        """Get a printable description for this store."""
+        name = self.__class__.__name__.replace('Storage', '')
+        return "{}: {}:{} -p {}".format(name, self.host, self.path, self.port)

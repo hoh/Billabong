@@ -64,3 +64,8 @@ class Storage:
     def push_blob_to(self, id_, other_storage):
         """Push a local blob to another storage."""
         raise NotImplementedError
+
+    def __repr__(self):
+        """Get a printable description for this store."""
+        name = self.__class__.__name__
+        return "{}".format(name)

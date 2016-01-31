@@ -67,3 +67,8 @@ class HTTPStorage(Storage):
         else:
             raise NotImplementedError("Range unsupported, status {}"
                                       .format(resp.status))
+
+    def __repr__(self):
+        """Get a printable description for this store."""
+        name = self.__class__.__name__.replace('Storage', '')
+        return "{}: {}".format(name, self.url)

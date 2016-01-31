@@ -32,3 +32,8 @@ def test__init(storage):
     """Test the storage has been initialized correctly."""
     assert storage
     assert storage.url
+
+
+def test_repr(storage):
+    """Test the string representation of the storage."""
+    assert str(storage) == 'HTTP: http://localhost:5080/'

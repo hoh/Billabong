@@ -68,3 +68,8 @@ class FolderStorage(Storage):
         """Push a local blob to another storage."""
         blobfile = open(self._blob_path(id_), 'rb')
         other_storage.import_blob(id_, blobfile)
+
+    def __repr__(self):
+        """Get a printable description for this store."""
+        name = self.__class__.__name__.replace('Storage', '')
+        return "{}: {}".format(name, self.path)
