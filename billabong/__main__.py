@@ -131,6 +131,13 @@ def push():
     push_blobs()
 
 
+@command(name='stores')
+def list_stores():
+    """List remote stores."""
+    for store in stores:
+        print(store)
+
+
 @command
 def pull():
     """Pull blobs from sync storage."""

@@ -45,5 +45,6 @@ def test_cli(record):
     run('echo ' + ID)
     run('status')
     run('version')
+    run('stores')
 
     run('add hello.txt')
