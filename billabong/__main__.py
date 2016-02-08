@@ -39,6 +39,7 @@ from billabong.settings import inventory, stores
 from billabong.check import check_data
 from billabong.utils import dumps
 from billabong.sync import push_blobs, pull_blobs
+from billabong.archive import NotEncryptedZipArchive
 
 
 def print_record(record):
@@ -145,9 +146,11 @@ def pull():
 
 
 @command
-def backup():
-    """Copy the inventory into a encrypted file on a remote system."""
-    raise NotImplementedError
+def archive(path):
+    """Copy the inventory into a (encrypted) file."""
+    archive = NotEncryptedZipArchive(path)
+    archive.update(inventory)
+    print("Saved archive as '{}'".format(path))
 
 
 @command
