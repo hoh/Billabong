@@ -17,7 +17,9 @@
 
 """Test archive classes."""
 
+import os.path
 import pytest
+from zipfile import is_zipfile, ZipFile
 
 from billabong.settings import inventory
 from billabong.archive import Archive, NotEncryptedZipArchive
@@ -33,7 +35,11 @@ def test_abstract_archive():
 
 
 def test_NotEncryptedZipArchive(record):
+    PATH = '/tmp/test_archive_path.zip'
     print(record['id'])
-    archive = NotEncryptedZipArchive('/tmp/does_not_exist.zip')
+    archive = NotEncryptedZipArchive(PATH)
     archive.update(inventory)
-    assert False
+    assert os.path.isfile(PATH)
+    assert is_zipfile(PATH)
+    with ZipFile(PATH) as zipfile:
+        assert "{}.json".format(record['id']) in zipfile.namelist()
