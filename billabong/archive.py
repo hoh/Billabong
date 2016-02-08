@@ -47,6 +47,6 @@ class NotEncryptedZipArchive(Archive):
         with ZipFile(self.path, mode='w') as zipfile:
             for record_id in inventory.list_record_ids():
                 zipfile.writestr(
-                    '{}.json'.format(record_id),
+                    "{}.json".format(record_id),
                     dumps(inventory.get_record(record_id), indent=4),
                 )
