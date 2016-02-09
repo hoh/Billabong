@@ -1,0 +1,4 @@
+#!/bin/bash
+
+
+PYTHONPATH=$(pwd):$PYTHONPATH py.test --pep8 --flakes --strict billabong
