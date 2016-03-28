@@ -96,6 +96,8 @@ def add(tags='', *targets):
 def info(*ids):
     """Print record content from one or several record ids."""
     for id_ in ids:
+        if len(id_) < 32:  # Allow use of short partial_id
+            id_ = meta = inventory.search_id(partial_id=id_).__next__()
         meta = inventory.get_record(id_)
         print_record(meta)
 

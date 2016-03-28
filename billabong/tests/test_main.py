@@ -37,6 +37,7 @@ def test_cli(record):
     run('blobs')
     run('tags')
     run('info ' + ID)
+    run('info ' + ID[:8])  # partial    id
     run('info ' + ID + ' --no-color')
     run('search txt')
     run('check')
