@@ -40,7 +40,7 @@ def dumps(obj, indent=2):
 def json_loader(dico):
     """Convert strings to datetime objects when loading JSON."""
     for key, value in dico.items():
-        if key == 'timestamp' and isinstance(value, str):
+        if key == 'datetime' and isinstance(value, str):
             try:
                 dico[key] = datetime.datetime.strptime(value,
                                                        "%Y-%m-%dT%H:%M:%S.%f")

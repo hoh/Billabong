@@ -21,6 +21,7 @@ import os.path
 from uuid import uuid4
 from base64 import b64encode, b64decode
 from datetime import datetime
+import time
 
 import magic
 
@@ -59,7 +60,8 @@ class Billabong:
             'hash': 'sha256-' + file_hash.hexdigest(),
             'blob': blob_hash,
             'size': os.path.getsize(realpath),
-            'timestamp': datetime.now(),
+            'datetime': datetime.utcnow(),
+            'timestamp': time.time(),
             'id': uuid4().hex,
 
             'info': {

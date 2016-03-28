@@ -20,6 +20,7 @@
 import pytest
 
 import json
+from datetime import datetime
 from billabong import billabong
 from billabong.utils import json_handler
 
@@ -40,6 +41,9 @@ def test_add_file():
 
     assert meta['info']['path']
     assert meta['info']['filename']
+
+    assert meta['timestamp'] > 1450000000
+    assert isinstance(meta['datetime'], datetime)
 
     inventory.delete(meta['id'])
     STORE.delete(meta['blob'])

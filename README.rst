@@ -79,7 +79,8 @@ Here is an example of meta-data used when testing the software:
 .. code:: json
 
     {
-      "timestamp": "2015-08-24T21:23:18.397957",
+      "datetime": "2015-08-24T21:23:18.397957",
+      "timestamp": 1440444198.397957,
       "hash": "sha256-fc7d4f43945d94c874415e3bd9a6e181f8c84f8a36f586389405e391c01e48b2",
       "info": {
         "filename": "hello.txt",
@@ -101,4 +102,3 @@ files can be copied or moved freely to other computers.
    :alt: TravisCI build Status
 
    TravisCI build Status
-
