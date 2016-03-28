@@ -53,11 +53,12 @@ def print_record(record):
 
 
 @command
-def ls():
+def ls(partial=True):
     """List short records ids with filename from the inventory."""
     format_ = "{:>8} {:>8} {:>8}"
     for record in inventory.list_records():
-        print(format_.format(record['id'][:8],
+        id_ = record['id'][:8] if partial else record['id']
+        print(format_.format(id_,
                              record['size'],
                              record['info']['filename']))
 
