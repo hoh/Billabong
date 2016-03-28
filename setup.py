@@ -21,7 +21,7 @@
 from setuptools import setup
 
 setup(name='Billabong',
-      version='0.2.5',
+      version='0.2.6',
       description='Personal Encrypted file storage, backup and sharing',
       long_description=open('README.rst').read(),
       author='Hugo Herter',
