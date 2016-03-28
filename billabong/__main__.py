@@ -35,7 +35,7 @@ except ImportError:
     highlight = None
 
 from billabong import billabong
-from billabong.settings import inventory, stores
+from billabong.settings import inventory, stores, settings, TMPSTORAGE_PATH
 from billabong.check import check_data
 from billabong.utils import dumps
 from billabong.sync import push_blobs, pull_blobs
@@ -179,6 +179,17 @@ def version():
     from billabong import __version__
     print(__version__)
 
+
+@command
+def config():
+    """Print current configuration."""
+    print("Inventory:")
+    print("  -", inventory)
+    print("Storages:")
+    for store in stores:
+        print("  -", store)
+    print("Temporary storage:", TMPSTORAGE_PATH)
+    print("FUSE mount path:", settings.get('mount'))
 
 if __name__ == '__main__':
     run()

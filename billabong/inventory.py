@@ -107,6 +107,11 @@ class Inventory:
             if filename == record['info']['filename']:
                 return record['id']
 
+    def __repr__(self):
+        """Get a printable description for this inventory."""
+        name = self.__class__.__name__
+        return "{}".format(name)
+
 
 class FolderInventory(Inventory):
 
@@ -139,6 +144,11 @@ class FolderInventory(Inventory):
         """Save a new record on disk."""
         destination = self._record_path(record['id'])
         open(destination, 'w').write(dumps(record))
+
+    def __repr__(self):
+        """Get a printable description for this inventory."""
+        name = self.__class__.__name__.replace('Inventory', '')
+        return "{}: {}".format(name, self.path)
 
 
 def load_inventory(settings):
