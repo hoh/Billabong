@@ -65,8 +65,8 @@ class Billabong:
             'id': uuid4().hex,
 
             'info': {
-                'type': magic.from_file(realpath).decode(),
-                'mimetype': magic.from_file(realpath, mime=True).decode(),
+                'type': magic.from_file(realpath),
+                'mimetype': magic.from_file(realpath, mime=True),
                 'filename': os.path.basename(filepath),
                 'path': filepath,
                 'tags': tags if tags else [],
