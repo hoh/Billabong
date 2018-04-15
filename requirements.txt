@@ -1,4 +1,4 @@
-pycrypto
+cryptography
 
 pytest
 pytest-cov
